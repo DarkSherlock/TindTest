@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="IP:"
+        android:textSize="15sp"/>
+
+    <EditText
+        android:id="@+id/et_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_ip"
+        android:text="192.168.8.41"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/tv_port"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_ip"
+        android:text="PORT:"
+        android:textSize="15sp"/>
+
+    <EditText
+        android:id="@+id/et_port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_ip"
+        android:text="7100"
+        android:layout_toRightOf="@+id/tv_port"
+        android:textSize="15sp"/>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_port"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbtn_draft10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Draft_10"/>
+
+        <RadioButton
+            android:id="@+id/rbtn_draft17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Draft_17"/>
+
+        <RadioButton
+            android:id="@+id/rbtn_draft75"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Draft_75"/>
+
+        <RadioButton
+            android:id="@+id/rbtn_draft76"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Draft_76"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_group"
+        android:text="链接"/>
+
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_group"
+        android:layout_toRightOf="@+id/btn_connect"
+        android:text="断开"/>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/et_send"
+        android:layout_below="@+id/btn_close"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <EditText
+        android:id="@+id/et_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/btn_send"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="发送"/>
+</RelativeLayout>
