@@ -2,8 +2,6 @@ package com.liang.tind.www.tindtest.activty;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RadioButton;
 
@@ -38,13 +36,7 @@ public class TestRbtnActivity extends BaseActivity {
             }
         });
 
-        radioButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.e(TAG, "onTouch: ");
-                return false;
-            }
-        });
+
 //        int FLAG_DISALLOW_INTERCEPT = 0x80000;
 //        int mGroupFlags = 0;
 //        final boolean disallowIntercept;
