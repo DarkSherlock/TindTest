@@ -70,10 +70,14 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
         mHashMap.put(KEY_SIMPLE_NAME, TestRbtnActivity.class.getSimpleName());
         mDatas.add(mHashMap);
 
+        mHashMap = new HashMap<>();
+        mHashMap.put(KEY_CLASS, TestGreenDao.class.getName());
+        mHashMap.put(KEY_SIMPLE_NAME, TestGreenDao.class.getSimpleName());
+        mDatas.add(mHashMap);
+
         SimpleAdapter adapter = new SimpleAdapter(this, mDatas, android.R.layout.simple_list_item_1, new String[]{KEY_SIMPLE_NAME}, new int[]{android.R.id.text1});
         //3.绑定
         setListAdapter(adapter);
-
 
     }
 

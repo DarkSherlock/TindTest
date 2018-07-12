@@ -43,6 +43,7 @@
         <activity android:name=".activty.TestRxjavaActivity"/>
         <activity android:name=".activty.TestRotateImageViewActivity"/>
         <activity android:name=".activty.TestRbtnActivity"/>
+        <activity android:name=".activty.TestGreenDao"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
