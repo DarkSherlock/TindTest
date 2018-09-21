@@ -42,6 +42,8 @@
         <activity android:name=".activty.TestBuglyAndResProguad"/>
         <activity android:name=".activty.TestRxjavaActivity"/>
         <activity android:name=".activty.TestRotateImageViewActivity"/>
+        <activity android:name=".activty.TestTalkBackActivity"/>
+        <activity android:name=".activty.TestRbtnActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

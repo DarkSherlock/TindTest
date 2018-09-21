@@ -7,13 +7,7 @@ import com.liang.tind.www.tindtest.base.BaseActivity;
 
 import org.reactivestreams.Subscription;
 
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
-import io.reactivex.FlowableSubscriber;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import java.util.HashSet;
 
 /**
  * created by Administrator
@@ -33,66 +27,39 @@ public class TestRxjavaActivity extends BaseActivity {
 
     @Override
     protected void init() {
+//        List<String> strings = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            strings.add(String.valueOf(i));
+//        }
+//        strings.add(String.valueOf(1));
+//        strings.remove("1");
+//        strings.remove("1");
+//        Log.e(TAG, "strings="+strings);
+//
+        HashSet<String > set = new HashSet<>();
+        set.add("1");
+        set.add("1");
 
 
-        Flowable<Integer> observable = Flowable.create(new FlowableOnSubscribe<Integer>() {
-            @Override
-            public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
-                int i = 0;
-                while (isComplete) {
-//                    Log.i(TAG, "subscribe: on while");
-//                    while (emitter.requested() == 0) {
-//                        if (emitter.isCancelled()) {
-//                            break;
-//                        }
-//                    }
-                    Log.e(TAG, "emitter ==" + i + ",  requested == " + emitter.requested());
-                    emitter.onNext(i++);
+        try {
+            getTest(1);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+    }
 
-                    if (i == 10) {
-                        mDisposable.request(96);
-                        Log.e(TAG, "request:96 ");
-                    }
-
-                }
-            }
-        }, BackpressureStrategy.ERROR);
-
-        FlowableSubscriber<Integer> integerObserver = new FlowableSubscriber<Integer>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-                mDisposable = s;
-                Log.e(TAG, "onSubscribe: ");
-//                mDisposable.request(1);
-            }
-
-
-            @Override
-            public void onNext(Integer o) {
-//                mDisposable.request(1);
-                Log.e(TAG, "onNext: " + o);
-
-
-                if (o >= (10 + 96)) {
-                    mDisposable.cancel();
-                    Log.e(TAG, "onNext: cancel");
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-                Log.e(TAG, "onComplete: ");
-            }
-        };
-
-        observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(integerObserver);
-
-
+    private boolean getTest(int i) throws Throwable {
+        if (i==7){
+           throw new Throwable("test");
+        }
+        if (1==5){
+            return true;
+        }
+        Log.e(TAG, "getTest: ");
+        Log.e(TAG, "getTest: ");
+        Log.e(TAG, "getTest: ");
+        Log.e(TAG, "getTest: ");
+        return false;
     }
 
 }
