@@ -7,7 +7,9 @@ import com.liang.tind.www.tindtest.base.BaseActivity;
 
 import org.reactivestreams.Subscription;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * created by Administrator
@@ -35,7 +37,8 @@ public class TestRxjavaActivity extends BaseActivity {
 //        strings.remove("1");
 //        strings.remove("1");
 //        Log.e(TAG, "strings="+strings);
-//
+
+
         HashSet<String > set = new HashSet<>();
         set.add("1");
         set.add("1");
@@ -62,4 +65,9 @@ public class TestRxjavaActivity extends BaseActivity {
         return false;
     }
 
+    class Item{
+        public List<String> getList(){
+            return new ArrayList<>();
+        }
+    }
 }

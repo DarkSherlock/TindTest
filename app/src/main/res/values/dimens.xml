@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="sports_kit_05dip">0.5dp</dimen>
+    <dimen name="sports_kit_1dip">1dp</dimen>
+    <dimen name="sports_kit_2dip">2dp</dimen>
+    <dimen name="sports_kit_3dip">3dp</dimen>
+    <dimen name="sports_kit_4dip">4dp</dimen>
+    <dimen name="sports_kit_5dip">5dp</dimen>
+    <dimen name="sports_kit_6dip">6dp</dimen>
+    <dimen name="sports_kit_8dip">8dp</dimen>
+    <dimen name="sports_kit_11dip">11dp</dimen>
+    <dimen name="sports_kit_12dip">12dp</dimen>
+    <dimen name="sports_kit_15dip">15dp</dimen>
+    <dimen name="sports_kit_20dip">20dp</dimen>
+    <dimen name="sports_kit_30dip">30dp</dimen>
+    <dimen name="sports_kit_45dip">45dp</dimen>
+    <dimen name="sports_kit_50dip">50dp</dimen>
+    <dimen name="sports_kit_56dip">56dp</dimen>
+
+    <dimen name="fontsize1">18dp</dimen>
+    <dimen name="fontsize10">30dp</dimen>
+    <dimen name="fontsize11">14dp</dimen>
+    <dimen name="fontsize12">12dp</dimen>
+    <dimen name="fontsize13">16dp</dimen>
+    <dimen name="fontsize14">15dp</dimen>
+    <dimen name="fontsize2">17dp</dimen>
+    <dimen name="fontsize3">18dp</dimen>
+    <dimen name="fontsize4">17dp</dimen>
+    <dimen name="fontsize5">14dp</dimen>
+    <dimen name="fontsize6">12dp</dimen>
+    <dimen name="fontsize7">11dp</dimen>
+    <dimen name="fontsize8">10dp</dimen>
+    <dimen name="fontsize9">24dp</dimen>
+</resources>

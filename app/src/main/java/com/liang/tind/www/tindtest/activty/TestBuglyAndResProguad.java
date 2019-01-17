@@ -42,7 +42,6 @@ public class TestBuglyAndResProguad extends BaseActivity {
                 CrashReport.testJavaCrash();
             }
         });
-
     }
 
 }

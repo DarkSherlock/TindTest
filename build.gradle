@@ -1,16 +1,27 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+    ext.kotlin_version = '1.2.61'
     repositories {
         google()
+        maven {
+            name 'aliyun'
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
         jcenter()
+
+//        maven {
+//            name 'maven2'
+//            url 'http://repo2.maven.org/maven2/'
+//        }
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
-        classpath "com.tencent.bugly:tinker-support:latest.release"
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "com.tencent.bugly:tinker-support:1.1.3"
         classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.10'
-
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-alpha06"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -19,7 +30,19 @@ buildscript {
 allprojects {
     repositories {
         google()
+        maven {
+            name 'aliyun'
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
         jcenter()
+//        maven {
+//            name 'aliyun'
+//            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+//        }
+//        maven {
+//            name 'maven2'
+//            url 'http://repo2.maven.org/maven2/'
+//        }
     }
 }
 

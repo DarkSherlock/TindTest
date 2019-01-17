@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TindTest</string>
+
+    <string name="sports_kit_month">月</string>
+    <string name="sports_kit_week">周</string>
+    <string name="sports_kit_reach_final_page">已到达最后一页</string>
 </resources>

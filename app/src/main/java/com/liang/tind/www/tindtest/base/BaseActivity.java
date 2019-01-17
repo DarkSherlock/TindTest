@@ -1,7 +1,6 @@
 package com.liang.tind.www.tindtest.base;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         init();
     }
+
+
 
     protected abstract @LayoutRes int getLayoutId();
 

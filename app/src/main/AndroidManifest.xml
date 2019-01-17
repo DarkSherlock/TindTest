@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.liang.tind.www.tindtest">
     <!-- 访问网络状态 -->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -21,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".base.TindApplication"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activty.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -44,6 +46,11 @@
         <activity android:name=".activty.TestRotateImageViewActivity"/>
         <activity android:name=".activty.TestTalkBackActivity"/>
         <activity android:name=".activty.TestRbtnActivity"/>
+        <activity android:name=".activty.TestRecyclerViewActivity"/>
+        <activity android:name=".activty.TestBarChartActivity"/>
+        <activity android:name=".activty.TestLineChartActivity"/>
+        <activity android:name=".activty.TestWidgetActivity"/>
+        <!--<activity android:name=".activty.TestLineChartActivity"/>-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"

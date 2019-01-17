@@ -3,7 +3,9 @@ package com.liang.tind.www.tindtest.activty;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -23,64 +25,51 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
     private List<HashMap<String, String>> mDatas;
     private static final String TAG = "MainActivity";
     public static final String SOCKET_SERVER_URL = "ws://47.96.31.242:7100";
-    private HashMap<String, String> mHashMap;
 
     //    public static final String SOCKET_SERVER_URL = "ws://192.168.8.41:7100";
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public static final int test = 885;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        logBuild();
+        quickTest();
 //        BroadcaseReceiverFactory.registerNetworkReceiver(this, this);
 //        SocketClient.getInstance().connectToServer(SOCKET_SERVER_URL);
         //1.数据源
         mDatas = new ArrayList<>();
-
-        mHashMap = new HashMap<>();
-        mHashMap.put(KEY_CLASS, TestSocketActivity.class.getName());
-        mHashMap.put(KEY_SIMPLE_NAME, TestSocketActivity.class.getSimpleName());
-        mDatas.add(mHashMap);
-
-        mHashMap = new HashMap<>();
-        mHashMap.put(KEY_CLASS, TestChromiumActivity.class.getName());
-        mHashMap.put(KEY_SIMPLE_NAME, TestChromiumActivity.class.getSimpleName());
-        mDatas.add(mHashMap);
-
-        mHashMap = new HashMap<>();
-        mHashMap.put(KEY_CLASS, TestHRFace.class.getName());
-        mHashMap.put(KEY_SIMPLE_NAME, TestHRFace.class.getSimpleName());
-        mDatas.add(mHashMap);
-
-        mHashMap = new HashMap<>();
-        mHashMap.put(KEY_CLASS, TestBuglyAndResProguad.class.getName());
-        mHashMap.put(KEY_SIMPLE_NAME, TestBuglyAndResProguad.class.getSimpleName());
-        mDatas.add(mHashMap);
-
-        mHashMap = new HashMap<>();
-        mHashMap.put(KEY_CLASS, TestRxjavaActivity.class.getName());
-        mHashMap.put(KEY_SIMPLE_NAME, TestRxjavaActivity.class.getSimpleName());
-        mDatas.add(mHashMap);
-
-        mHashMap = new HashMap<>();
-        mHashMap.put(KEY_CLASS, TestRotateImageViewActivity.class.getName());
-        mHashMap.put(KEY_SIMPLE_NAME, TestRotateImageViewActivity.class.getSimpleName());
-        mDatas.add(mHashMap);
-
-        mHashMap = new HashMap<>();
-        mHashMap.put(KEY_CLASS, TestTalkBackActivity.class.getName());
-        mHashMap.put(KEY_SIMPLE_NAME, TestTalkBackActivity.class.getSimpleName());
-        mDatas.add(mHashMap);
-
-        mHashMap = new HashMap<>();
-        mHashMap.put(KEY_CLASS, TestRbtnActivity.class.getName());
-        mHashMap.put(KEY_SIMPLE_NAME, TestRbtnActivity.class.getSimpleName());
-        mDatas.add(mHashMap);
-
+        
+        addItem(TestSocketActivity.class);
+        addItem(TestChromiumActivity.class);
+        addItem(TestHRFace.class);
+        addItem(TestBuglyAndResProguad.class);
+        addItem(TestRotateImageViewActivity.class);
+        addItem(TestTalkBackActivity.class);
+        addItem(TestRbtnActivity.class);
+        addItem(TestRecyclerViewActivity.class);
+        addItem(TestLineChartActivity.class);
+        addItem(TestBarChartActivity.class);
+        addItem(TestWidgetActivity.class);
 
         SimpleAdapter adapter = new SimpleAdapter(this, mDatas, android.R.layout.simple_list_item_1, new String[]{KEY_SIMPLE_NAME}, new int[]{android.R.id.text1});
         //3.绑定
         setListAdapter(adapter);
+    }
 
+    private void logBuild() {
+        Log.i(TAG, "Device : "+Build.DEVICE);
+        Log.i(TAG, "Device System Code: "+Build.VERSION.CODENAME);
+        Log.i(TAG, "Device System RELEASE: "+Build.VERSION.RELEASE);
+        Log.i(TAG, "Device System SDK_INT: "+Build.VERSION.SDK_INT);
+    }
 
+    private void addItem(Class claszz) {
+        HashMap<String, String> hashMap;
+        hashMap = new HashMap<>();
+        hashMap.put(KEY_CLASS, claszz.getName());
+        hashMap.put(KEY_SIMPLE_NAME, claszz.getSimpleName());
+        mDatas.add(hashMap);
     }
 
     @Override
@@ -113,4 +102,23 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
             SocketClient.getInstance().connectToServer(SOCKET_SERVER_URL);
         }
     }
+
+    private void quickTest(){
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ",Locale.getDefault());
+//
+//        String time = sdf.format(new Date());
+//        Log.e(TAG, "quickTest(MainActivity.java:128): "+time);
+//        System.out.println(time);
+//
+//        //解析时间 2016-01-05T15:09:54Z
+//        Date date = null;
+//        try {
+//            date = sdf.parse(time);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        Log.e(TAG, "quickTest(MainActivity.java:138): "+date);
+//        System.out.println(date);
+    }
+
 }

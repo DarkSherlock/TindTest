@@ -1,9 +1,7 @@
 *.iml
 .gradle
 /local.properties
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
+
 .DS_Store
 /build
 /captures
@@ -12,9 +10,10 @@
 gradlew
 gradlew.bat
 /.idea
-build/*
+
 /app/src/androidTest
 /app/src/test
+
 
 
 

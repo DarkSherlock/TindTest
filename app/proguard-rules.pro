@@ -19,3 +19,26 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class com.maxwell.imkid.library.bean.** { *; }
+
+-keep @com.maxwell.imkid.library.permission.annotation.OnMPermissionDenied class * {*;}
+-keep,allowobfuscation @interface com.maxwell.imkid.library.permission.annotation.OnMPermissionDenied
+-keepclassmembers class * {
+    @com.maxwell.imkid.library.permission.annotation.OnMPermissionDenied *;
+}
+-keep @com.maxwell.imkid.library.permission.annotation.OnMPermissionGranted class * {*;}
+-keep,allowobfuscation @interface com.maxwell.imkid.library.permission.annotation.OnMPermissionGranted
+-keepclassmembers class * {
+    @com.maxwell.imkid.library.permission.annotation.OnMPermissionGranted *;
+}
+-keep @com.maxwell.imkid.library.permission.annotation.OnMPermissionNeverAskAgain class * {*;}
+-keep,allowobfuscation @interface com.maxwell.imkid.library.permission.annotation.OnMPermissionNeverAskAgain
+-keepclassmembers class * {
+    @com.maxwell.imkid.library.permission.annotation.OnMPermissionNeverAskAgain *;
+}
+
+-keep @com.maxwell.imkid.library.socket.OnSocket class * {*;}
+-keep,allowobfuscation @interface com.maxwell.imkid.library.socket.OnSocket
+-keepclassmembers class * {
+    @com.maxwell.imkid.library.socket.OnSocket *;
+}

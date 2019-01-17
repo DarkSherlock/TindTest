@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <!--<com.liang.tind.www.tindtest.widget.chart.GraphChartView-->
+    <!--android:id="@+id/custom"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--app:y_padding="0dp"-->
+    <!--app:circleRadius="3dp"-->
+    <!--app:circleColor="@android:color/holo_green_light"-->
+    <!--app:lineSize="3sp"-->
+    <!--app:lineColor="@android:color/holo_blue_light"-->
+    <!--app:graphTextSize="14sp"-->
+    <!--app:graphTextColor="@android:color/holo_purple"-->
+    <!--app:gradientToColor="@android:color/holo_red_light"-->
+    <!--app:gradientHeight="20dp"-->
+    <!--app:gradientFromColor="@android:color/holo_orange_light"-->
+    <!--/>-->
+
+
+    <com.liang.tind.www.tindtest.widget.mpchart.BarChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        />
+
+</LinearLayout>
