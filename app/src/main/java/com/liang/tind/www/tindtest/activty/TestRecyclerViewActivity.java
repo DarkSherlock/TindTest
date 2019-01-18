@@ -1,7 +1,14 @@
 package com.liang.tind.www.tindtest.activty;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
@@ -29,18 +36,82 @@ public class TestRecyclerViewActivity extends BaseActivity {
         mRvBirthdayUsers.setLayoutManager(new LinearLayoutManager(this));
 
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 21; i++) {
+        for (int i = 0; i < 5; i++) {
             list.add("test"+i);
         }
-//        mRvBirthdayUsers.setAdapter(adapter);
-//        adapter.setList(list);
-//        Observable.timer(1,TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
-//            @Override
-//            public void accept(Long aLong) throws Exception {
-//                Log.e(TAG, "accept(TestRecyclerViewActivity.java:45): setList");
-//                adapter.setList(list);
-//            }
-//        });
 
+        mRvBirthdayUsers.setAdapter(new RvAdapter(list,this));
+    }
+
+
+    public static class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder>{
+        private List<String> mList;
+        private Context mContext;
+
+        public RvAdapter(List<String> list, Context context) {
+            mList = list;
+            mContext = context;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_nested_rv, null);
+            inflate.setOnClickListener(view -> Log.i("Tind", "on Parent RV click"));
+            return new ViewHolder(inflate);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            String item = mList.get(position);
+            List<String> list = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                list.add(item+i);
+            }
+            holder.setData(list);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mList.size();
+        }
+
+
+        class ViewHolder extends RecyclerView.ViewHolder{
+            RecyclerView mRecyclerView;
+            RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                mRecyclerView = (RecyclerView) itemView;
+            }
+
+            public void setData(List<String> list){
+               mAdapter = new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                   @NonNull
+                   @Override
+                   public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                       TextView textView = new TextView(itemView.getContext());
+                       return new RecyclerView.ViewHolder(textView){
+
+                       };
+                   }
+
+                   @Override
+                   public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+                       TextView itemView = (TextView) holder.itemView;
+                       itemView.setText(list.get(position));
+                   }
+
+                   @Override
+                   public int getItemCount() {
+                       return list.size();
+                   }
+               };
+
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        }
     }
 }

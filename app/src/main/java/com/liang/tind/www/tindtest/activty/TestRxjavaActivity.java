@@ -10,6 +10,11 @@ import org.reactivestreams.Subscription;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * created by Administrator
@@ -39,7 +44,7 @@ public class TestRxjavaActivity extends BaseActivity {
 //        Log.e(TAG, "strings="+strings);
 
 
-        HashSet<String > set = new HashSet<>();
+        HashSet<String> set = new HashSet<>();
         set.add("1");
         set.add("1");
 
@@ -49,13 +54,79 @@ public class TestRxjavaActivity extends BaseActivity {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
+//        Observable<String> list1 = Observable.fromIterable(new ArrayList<String>());
+//        Observable<String> list2 = Observable.fromIterable(new ArrayList<String>());
+//        Observable.zip(list1, list2, new BiFunction<String, String, List<String>>() {
+//            @Override
+//            public List<String> apply(String s, String s2) throws Exception {
+//                List<String> list = new ArrayList<>();
+//                if (s.equals(s2))
+//                    return null;
+//            }
+//        }).subscribe(new Consumer<List<String>>() {
+//            @Override
+//            public void accept(List<String> strings) throws Exception {
+//
+//            }
+//        });
+
+
+        MyHashSet<Integer> myHashSet = new MyHashSet<>();
+
+        Observable.just(1, 2, 3)
+                .distinct(integer -> integer, () -> myHashSet)
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        myHashSet.distinct();
+
+                        for (Integer integer : myHashSet) {
+                            Log.i(TAG, "integer =="+integer);
+                        }
+                    }
+                });
+
+
+    }
+
+    class MyHashSet<E> extends HashSet<E> {
+        private Set<E> mHashSet = new HashSet<>();
+        @Override
+        public boolean add(E e) {
+            boolean add = super.add(e);
+            if (!add){
+                mHashSet.add(e);
+            }
+            return add;
+        }
+
+        public void distinct(){
+            for (E e : mHashSet) {
+                remove(e);
+            }
+        }
     }
 
     private boolean getTest(int i) throws Throwable {
-        if (i==7){
-           throw new Throwable("test");
+        if (i == 7) {
+            throw new Throwable("test");
         }
-        if (1==5){
+        if (1 == 5) {
             return true;
         }
         Log.e(TAG, "getTest: ");
@@ -65,8 +136,8 @@ public class TestRxjavaActivity extends BaseActivity {
         return false;
     }
 
-    class Item{
-        public List<String> getList(){
+    class Item {
+        public List<String> getList() {
             return new ArrayList<>();
         }
     }
