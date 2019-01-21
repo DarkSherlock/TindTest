@@ -73,7 +73,7 @@ public class TestRxjavaActivity extends BaseActivity {
 
         MyHashSet<Integer> myHashSet = new MyHashSet<>();
 
-        Observable.just(1, 2, 3)
+        Observable.just(1, 2, 3, 3, 3, 4, 4, 5)
                 .distinct(integer -> integer, () -> myHashSet)
                 .subscribe(new Observer<Integer>() {
                     @Override
@@ -96,7 +96,7 @@ public class TestRxjavaActivity extends BaseActivity {
                         myHashSet.distinct();
 
                         for (Integer integer : myHashSet) {
-                            Log.i(TAG, "integer =="+integer);
+                            Log.i(TAG, "integer ==" + integer);
                         }
                     }
                 });
@@ -106,19 +106,29 @@ public class TestRxjavaActivity extends BaseActivity {
 
     class MyHashSet<E> extends HashSet<E> {
         private Set<E> mHashSet = new HashSet<>();
+
         @Override
         public boolean add(E e) {
             boolean add = super.add(e);
-            if (!add){
+            if (!add) {
                 mHashSet.add(e);
             }
             return add;
         }
 
-        public void distinct(){
+        public void distinct() {
             for (E e : mHashSet) {
                 remove(e);
             }
+        }
+
+        @Override
+        public void clear() {
+//            super.clear();
+        }
+
+        public void realClear() {
+            super.clear();
         }
     }
 
