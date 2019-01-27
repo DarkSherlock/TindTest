@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.liang.tind.www.tindtest.util.CrashHandler;
 import com.maxwell.imkid.library.app.MaxWellApplication;
@@ -17,7 +18,7 @@ import com.tencent.tinker.loader.app.DefaultApplicationLike;
 
 
 public class MyApplicationLike extends DefaultApplicationLike {
-
+    private static final String TAG = "MyApplicationLike";
     public MyApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
         super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
     }
@@ -32,6 +33,8 @@ public class MyApplicationLike extends DefaultApplicationLike {
         Bugly.init(getApplication(), "1406e2ba7a", true);
         MaxWellApplication.init(getApplication(),BuildConfig.DEBUG);
 //        initImageLoader();
+
+        logBuild();
     }
 
 //    private void initImageLoader() {
@@ -75,6 +78,13 @@ public class MyApplicationLike extends DefaultApplicationLike {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public void registerActivityLifecycleCallback(Application.ActivityLifecycleCallbacks callbacks) {
         getApplication().registerActivityLifecycleCallbacks(callbacks);
+    }
+
+    protected void logBuild() {
+        Log.i(TAG, "Device : "+Build.DEVICE);
+        Log.i(TAG, "Device System Code: "+Build.VERSION.CODENAME);
+        Log.i(TAG, "Device System RELEASE: "+Build.VERSION.RELEASE);
+        Log.i(TAG, "Device System SDK_INT: "+Build.VERSION.SDK_INT);
     }
 
 }

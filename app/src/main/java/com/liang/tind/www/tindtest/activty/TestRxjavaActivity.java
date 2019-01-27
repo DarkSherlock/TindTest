@@ -101,7 +101,6 @@ public class TestRxjavaActivity extends BaseActivity {
                     }
                 });
 
-
     }
 
     class MyHashSet<E> extends HashSet<E> {

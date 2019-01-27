@@ -98,20 +98,6 @@ public class TestRbtnActivity extends BaseActivity {
             }
         });
 
-        String url = "https://www.csdn.net/";
-        StringBuilder stringBuilder = new StringBuilder(url);
-
-        int index = stringBuilder.lastIndexOf("/");
-        if (index!=-1){
-            stringBuilder.deleteCharAt(index);
-            Log.e(TAG, "init: "+stringBuilder.toString());
-        }
-        stringBuilder.append("?");
-        stringBuilder.append("com_nd_appid");
-        stringBuilder.append("=");
-        stringBuilder.append("test");
-
-        Log.e(TAG, "init: url=="+stringBuilder.toString());
     }
 
     @Override

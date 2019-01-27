@@ -3,7 +3,6 @@ package com.liang.tind.www.tindtest.activty;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.liang.tind.www.tindtest.activty.widget.TestViewActivity;
 import com.liang.tind.www.tindtest.receiver.NetworkBroadcastReceiver;
 import com.liang.tind.www.tindtest.util.NetworkUtils;
 import com.liang.tind.www.tindtest.util.SocketClient;
@@ -22,7 +22,8 @@ import java.util.List;
 public class MainActivity extends ListActivity implements NetworkBroadcastReceiver.NetEvent {
     public static final String KEY_CLASS = "class";
     public static final String KEY_SIMPLE_NAME = "simple_name";
-    private List<HashMap<String, String>> mDatas;
+    protected List<HashMap<String, String>> mDatas = new ArrayList<>();
+
     private static final String TAG = "MainActivity";
     public static final String SOCKET_SERVER_URL = "ws://47.96.31.242:7100";
 
@@ -33,13 +34,17 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        logBuild();
-        quickTest();
 //        BroadcaseReceiverFactory.registerNetworkReceiver(this, this);
 //        SocketClient.getInstance().connectToServer(SOCKET_SERVER_URL);
+         SimpleAdapter adapter = new SimpleAdapter(this, mDatas, android.R.layout.simple_list_item_1,
+                new String[]{KEY_SIMPLE_NAME}, new int[]{android.R.id.text1});
+        initData();
+        setListAdapter(adapter);
+        quickTest();
+    }
+
+    protected void initData() {
         //1.数据源
-        mDatas = new ArrayList<>();
-        
         addItem(TestSocketActivity.class);
         addItem(TestChromiumActivity.class);
         addItem(TestHRFace.class);
@@ -51,20 +56,13 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
         addItem(TestLineChartActivity.class);
         addItem(TestBarChartActivity.class);
         addItem(TestWidgetActivity.class);
+        addItem(TestViewActivity.class);
 
-        SimpleAdapter adapter = new SimpleAdapter(this, mDatas, android.R.layout.simple_list_item_1, new String[]{KEY_SIMPLE_NAME}, new int[]{android.R.id.text1});
-        //3.绑定
-        setListAdapter(adapter);
     }
 
-    private void logBuild() {
-        Log.i(TAG, "Device : "+Build.DEVICE);
-        Log.i(TAG, "Device System Code: "+Build.VERSION.CODENAME);
-        Log.i(TAG, "Device System RELEASE: "+Build.VERSION.RELEASE);
-        Log.i(TAG, "Device System SDK_INT: "+Build.VERSION.SDK_INT);
-    }
 
-    private void addItem(Class claszz) {
+
+    protected void addItem(Class claszz) {
         HashMap<String, String> hashMap;
         hashMap = new HashMap<>();
         hashMap.put(KEY_CLASS, claszz.getName());
@@ -103,8 +101,9 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
         }
     }
 
+
     private void quickTest(){
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ",Locale.getDefault());
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
 //
 //        String time = sdf.format(new Date());
 //        Log.e(TAG, "quickTest(MainActivity.java:128): "+time);
@@ -119,6 +118,8 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
 //        }
 //        Log.e(TAG, "quickTest(MainActivity.java:138): "+date);
 //        System.out.println(date);
+
     }
+
 
 }
