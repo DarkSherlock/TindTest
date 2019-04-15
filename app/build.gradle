@@ -64,7 +64,7 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.liang.tind.www.tindtest"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode verCode()
         versionName verName()
@@ -210,7 +210,7 @@ dependencies {
     implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
     implementation 'com.orhanobut:logger:2.1.1'
-
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 //    implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha06'
     //    implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha06'
     //    implementation "android.arch.navigation:navigation-fragment:$nav_version"

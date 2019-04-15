@@ -15,9 +15,13 @@ import com.liang.tind.www.tindtest.receiver.NetworkBroadcastReceiver;
 import com.liang.tind.www.tindtest.util.NetworkUtils;
 import com.liang.tind.www.tindtest.util.SocketClient;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends ListActivity implements NetworkBroadcastReceiver.NetEvent {
     public static final String KEY_CLASS = "class";
@@ -49,14 +53,11 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
         addItem(TestChromiumActivity.class);
         addItem(TestHRFace.class);
         addItem(TestBuglyAndResProguad.class);
-        addItem(TestRotateImageViewActivity.class);
+
         addItem(TestTalkBackActivity.class);
-        addItem(TestRbtnActivity.class);
-        addItem(TestRecyclerViewActivity.class);
-        addItem(TestLineChartActivity.class);
-        addItem(TestBarChartActivity.class);
-        addItem(TestWidgetActivity.class);
+
         addItem(TestViewActivity.class);
+        addItem(TestRxjavaActivity.class);
 
     }
 
@@ -103,7 +104,7 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
 
 
     private void quickTest(){
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
 //
 //        String time = sdf.format(new Date());
 //        Log.e(TAG, "quickTest(MainActivity.java:128): "+time);
@@ -118,8 +119,29 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
 //        }
 //        Log.e(TAG, "quickTest(MainActivity.java:138): "+date);
 //        System.out.println(date);
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+
+        list.add(2);
+
+        list.add(3);
+        list.add(8);
+        list.add(1);
+        list.add(6);
+//        list.add(1,1);
+
+        Log.i(TAG, "quickTest(MainActivity.java:130): "+list);
+        Collections.sort(list, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        });
+
+        Log.i(TAG, "quickTest(MainActivity.java:141): "+list);
 
     }
+
 
 
 }

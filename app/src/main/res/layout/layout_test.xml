@@ -36,4 +36,37 @@
         tools:text="text"
         android:textSize="15sp"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_light_333"
+        tools:text="tind"
+        android:layout_alignBottom="@id/text"
+        android:layout_toRightOf="@id/text"
+        android:textSize="15sp"
+        />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_anonymous_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:checked="false"
+        android:background="@drawable/qa_goverment_publish_switch_bg_selector"
+        app:trackTint="#00000000"
+        app:thumbTint="#00000000"
+        />
+
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@android:color/holo_green_light"
+        android:gravity="top"
+        android:maxLines="2"
+        android:textSize="17sp"/>
+
 </RelativeLayout>

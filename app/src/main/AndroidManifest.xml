@@ -49,7 +49,7 @@
         <activity android:name=".activty.TestRecyclerViewActivity"/>
         <activity android:name=".activty.TestBarChartActivity"/>
         <activity android:name=".activty.TestLineChartActivity"/>
-        <activity android:name=".activty.TestWidgetActivity"/>
+        <activity android:name=".activty.widget.TestWidgetActivity"/>
         <activity android:name=".activty.widget.TestOnTouchEventActivity"/>
         <activity android:name=".activty.widget.TestViewActivity"/>
         <!--<activity android:name=".activty.TestLineChartActivity"/>-->

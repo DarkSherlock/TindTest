@@ -8,13 +8,19 @@ import com.liang.tind.www.tindtest.base.BaseActivity;
 import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * created by Administrator
@@ -44,16 +50,16 @@ public class TestRxjavaActivity extends BaseActivity {
 //        Log.e(TAG, "strings="+strings);
 
 
-        HashSet<String> set = new HashSet<>();
-        set.add("1");
-        set.add("1");
-
-
-        try {
-            getTest(1);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+//        HashSet<String> set = new HashSet<>();
+//        set.add("1");
+//        set.add("1");
+//
+//
+//        try {
+//            getTest(1);
+//        } catch (Throwable throwable) {
+//            throwable.printStackTrace();
+//        }
 //        Observable<String> list1 = Observable.fromIterable(new ArrayList<String>());
 //        Observable<String> list2 = Observable.fromIterable(new ArrayList<String>());
 //        Observable.zip(list1, list2, new BiFunction<String, String, List<String>>() {
@@ -69,85 +75,60 @@ public class TestRxjavaActivity extends BaseActivity {
 //
 //            }
 //        });
+        List<Map<String,Integer>> list = new ArrayList<>();
+        HashMap<String,Integer> map1 = new HashMap<>();
+        HashMap<String,Integer> map2 = new HashMap<>();
+        map1.put("key",1);
+        map2.put("key",2);
+        list.add(map1);
+        list.add(map2);
+//        list.add(3+"");
+//        list.add(4+"");
+        Observable.fromIterable(list)
+                .subscribeOn(Schedulers.io())
+                .flatMap(new Function<Map<String,Integer>, ObservableSource<Map<String,Integer>>>() {
+                    @Override
+                    public ObservableSource<Map<String,Integer>> apply(Map<String,Integer> value) throws Exception {
+                        Observable<Map<String,Integer>> observable = Observable.create(new ObservableOnSubscribe<Map<String,Integer>>() {
+                            @Override
+                            public void subscribe(ObservableEmitter<Map<String,Integer>> emitter) throws Exception {
+                                Log.i(TAG, "apply(TestRxjavaActivity.java:79): " + value);
+                                if (value.get("key") == 2) {
+                                    Thread.sleep(1000);
+                                    value.put("key",3);
+                                    Log.i(TAG, "apply(TestRxjavaActivity.java:84): wake up");
+                                }
+                                emitter.onNext(value);
+                                emitter.onComplete();
+                            }
+                        }).subscribeOn(Schedulers.newThread())
+                                .observeOn(AndroidSchedulers.mainThread());
 
-
-        MyHashSet<Integer> myHashSet = new MyHashSet<>();
-
-        Observable.just(1, 2, 3, 3, 3, 4, 4, 5)
-                .distinct(integer -> integer, () -> myHashSet)
-                .subscribe(new Observer<Integer>() {
+                        return observable;
+                    }
+                })
+                .subscribe(new Observer<Map<String, Integer>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        Log.i(TAG, "onSubscribe(TestRxjavaActivity.java:113): ");
                     }
 
                     @Override
-                    public void onNext(Integer integer) {
-
+                    public void onNext(Map<String, Integer> stringIntegerMap) {
+                        Log.i(TAG, "onNext(TestRxjavaActivity.java:118): "+stringIntegerMap);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.w(TAG, "onError(TestRxjavaActivity.java:123): ",e);
                     }
 
                     @Override
                     public void onComplete() {
-                        myHashSet.distinct();
-
-                        for (Integer integer : myHashSet) {
-                            Log.i(TAG, "integer ==" + integer);
-                        }
+                        Log.i(TAG, "onComplete(TestRxjavaActivity.java:128): ");
                     }
                 });
 
     }
 
-    class MyHashSet<E> extends HashSet<E> {
-        private Set<E> mHashSet = new HashSet<>();
-
-        @Override
-        public boolean add(E e) {
-            boolean add = super.add(e);
-            if (!add) {
-                mHashSet.add(e);
-            }
-            return add;
-        }
-
-        public void distinct() {
-            for (E e : mHashSet) {
-                remove(e);
-            }
-        }
-
-        @Override
-        public void clear() {
-//            super.clear();
-        }
-
-        public void realClear() {
-            super.clear();
-        }
-    }
-
-    private boolean getTest(int i) throws Throwable {
-        if (i == 7) {
-            throw new Throwable("test");
-        }
-        if (1 == 5) {
-            return true;
-        }
-        Log.e(TAG, "getTest: ");
-        Log.e(TAG, "getTest: ");
-        Log.e(TAG, "getTest: ");
-        Log.e(TAG, "getTest: ");
-        return false;
-    }
-
-    class Item {
-        public List<String> getList() {
-            return new ArrayList<>();
-        }
-    }
 }

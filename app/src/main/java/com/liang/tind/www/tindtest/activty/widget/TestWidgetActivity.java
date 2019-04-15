@@ -1,5 +1,8 @@
-package com.liang.tind.www.tindtest.activty;
+package com.liang.tind.www.tindtest.activty.widget;
 
+import android.content.res.ColorStateList;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
@@ -61,22 +64,49 @@ public class TestWidgetActivity extends BaseActivity {
             String group0 = matcher.group(0);
             int end = matcher.end();
             int start = matcher.start();
-            Log.i(TAG, "init(TestWidgetActivity.java:62): group0=" + group0);
-            Log.i(TAG, "init(TestWidgetActivity.java:62): substring=" + test.substring(start, end));
-//            String group1 = matcher.group(1);
-//            Log.i(TAG, "init(TestWidgetActivity.java:64): group1="+group1);
-//            String group2 = matcher.group(2);
-//            Log.i(TAG, "init(TestWidgetActivity.java:61): group2="+group2);
-//            test = test.replaceAll(group0, "<font color='red' size='20'>" +
-//                    "***" +
-//                    "</font>");
             test = test.replaceFirst(group0, "<font color='red' size='20'>" +
                     "***" +
                     "</font>");
-            Log.i(TAG, "init(TestWidgetActivity.java:76): test="+test);
         }
 
         textView.setText(Html.fromHtml(test));
+
+
+        SwitchCompat switchCompat = findViewById(R.id.switch_anonymous_question);
+//        setSwitchColor(switchCompat);
+    }
+
+
+    public static void setSwitchColor(SwitchCompat v) {
+
+        // thumb color
+        int thumbColor = 0xffff0000;
+
+        // trackColor
+        int trackColor = 0xffdddddd;
+
+        // set the thumb color
+        DrawableCompat.setTintList(v.getThumbDrawable(), new ColorStateList(
+                new int[][]{
+                        new int[]{android.R.attr.state_checked},
+                        new int[]{}
+                },
+                new int[]{
+                        thumbColor,
+                        thumbColor
+                }));
+
+        // set the track color
+        DrawableCompat.setTintList(v.getTrackDrawable(), new ColorStateList(
+                new int[][]{
+                        new int[]{android.R.attr.state_checked},
+                        new int[]{}
+                },
+                new int[]{
+                        thumbColor,
+                        trackColor
+                }));
+
 
     }
 

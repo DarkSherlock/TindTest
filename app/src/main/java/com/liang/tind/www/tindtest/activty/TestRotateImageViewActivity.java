@@ -31,8 +31,6 @@ public class TestRotateImageViewActivity extends BaseActivity {
     @Override
     protected void init() {
         ButterKnife.bind(this);
-
-
     }
 
     @OnClick(R.id.button)
