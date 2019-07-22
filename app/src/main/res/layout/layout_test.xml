@@ -68,5 +68,4 @@
         android:gravity="top"
         android:maxLines="2"
         android:textSize="17sp"/>
-
 </RelativeLayout>

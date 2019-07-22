@@ -1,6 +1,7 @@
 package com.liang.tind.www.tindtest.activty.widget;
 
 import android.content.res.ColorStateList;
+import android.support.design.widget.TabLayout;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Html;
@@ -47,8 +48,7 @@ public class TestWidgetActivity extends BaseActivity {
 //            Log.e(TAG, "init(TestWidgetActivity.java:39): "+replaceAll);
         }
         Log.e(TAG, "init(TestWidgetActivity.java:41): text = " + text);
-
-
+       
         //"<font color='red' size='20'>"+names.get(i)+"</font>"
 
         stringBuilder.append("<font color='red' size='20'>");
@@ -71,6 +71,8 @@ public class TestWidgetActivity extends BaseActivity {
 
         textView.setText(Html.fromHtml(test));
 
+        TabLayout tabLayout  = new TabLayout(this);
+        tabLayout.addOnTabSelectedListener(null);
 
         SwitchCompat switchCompat = findViewById(R.id.switch_anonymous_question);
 //        setSwitchColor(switchCompat);
