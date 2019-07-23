@@ -1,7 +1,8 @@
 package com.liang.tind.www.tindtest.widget.mpchart.animation;
 
 import android.animation.TimeInterpolator;
-import android.support.annotation.RequiresApi;
+
+import androidx.annotation.RequiresApi;
 
 
 /**

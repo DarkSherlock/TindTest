@@ -3,7 +3,6 @@ package com.liang.tind.www.tindtest.util;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.liang.tind.www.tindtest.bean.SocketCloseBean;
@@ -20,6 +19,8 @@ import java.net.URISyntaxException;
 import java.nio.channels.NotYetConnectedException;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public class SocketClient {
     private static final String TAG = "SocketClient";

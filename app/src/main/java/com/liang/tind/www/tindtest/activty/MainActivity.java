@@ -4,7 +4,6 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -22,6 +21,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import androidx.annotation.VisibleForTesting;
 
 public class MainActivity extends ListActivity implements NetworkBroadcastReceiver.NetEvent {
     public static final String KEY_CLASS = "class";

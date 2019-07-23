@@ -3,12 +3,13 @@ package com.liang.tind.www.tindtest.activty;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
+
+import androidx.annotation.Nullable;
 
 /**
  * created by Administrator

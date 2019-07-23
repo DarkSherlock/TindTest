@@ -1,9 +1,10 @@
 package com.liang.tind.www.tindtest.widget.chart;
 
-import android.support.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 /**
  * Created by Administrator on 2018/3/19.

@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.liang.tind.www.tindtest.util.CrashHandler;
@@ -15,6 +14,8 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.tinker.loader.BuildConfig;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
+
+import androidx.multidex.MultiDex;
 
 
 public class MyApplicationLike extends DefaultApplicationLike {

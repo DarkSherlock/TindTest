@@ -12,7 +12,7 @@ import android.util.Log;
  * <p>
  * date 2018/6/6
  */
-public class RotateImageView extends android.support.v7.widget.AppCompatImageView {
+public class RotateImageView extends androidx.appcompat.widget.AppCompatImageView {
     private static final String TAG = "RotateImageView";
 
     public RotateImageView(Context context) {

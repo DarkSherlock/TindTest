@@ -2,8 +2,8 @@ package com.liang.tind.www.tindtest.widget.mpchart.animation;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.support.annotation.RequiresApi;
 
+import androidx.annotation.RequiresApi;
 
 
 /**

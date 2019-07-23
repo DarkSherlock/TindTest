@@ -1,18 +1,19 @@
 package com.liang.tind.www.tindtest.activty.widget;
 
 import android.content.res.ColorStateList;
-import android.support.design.widget.TabLayout;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.SwitchCompat;
 import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 /**
  * desc

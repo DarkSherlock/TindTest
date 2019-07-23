@@ -8,13 +8,14 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Shader;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.liang.tind.www.tindtest.R;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 /**

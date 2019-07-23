@@ -1,13 +1,14 @@
 package com.liang.tind.www.tindtest.activty;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
+
+import androidx.annotation.Nullable;
 
 public class TestChromiumActivity extends BaseActivity {
 

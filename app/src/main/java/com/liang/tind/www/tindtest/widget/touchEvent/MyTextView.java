@@ -1,17 +1,18 @@
 package com.liang.tind.www.tindtest.widget.touchEvent;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+
+import androidx.annotation.Nullable;
 
 /**
  * desc
  * created by liangtiande
  * date 2019/1/22
  */
-public  class MyTextView extends android.support.v7.widget.AppCompatTextView{
+public  class MyTextView extends androidx.appcompat.widget.AppCompatTextView{
     private static final String TAG = "MyTextView";
     public MyTextView(Context context) {
         super(context);

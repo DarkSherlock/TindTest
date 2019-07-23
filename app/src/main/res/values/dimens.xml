@@ -18,18 +18,7 @@
     <dimen name="sports_kit_50dip">50dp</dimen>
     <dimen name="sports_kit_56dip">56dp</dimen>
 
-    <dimen name="fontsize1">18dp</dimen>
-    <dimen name="fontsize10">30dp</dimen>
-    <dimen name="fontsize11">14dp</dimen>
-    <dimen name="fontsize12">12dp</dimen>
-    <dimen name="fontsize13">16dp</dimen>
-    <dimen name="fontsize14">15dp</dimen>
-    <dimen name="fontsize2">17dp</dimen>
-    <dimen name="fontsize3">18dp</dimen>
-    <dimen name="fontsize4">17dp</dimen>
     <dimen name="fontsize5">14dp</dimen>
     <dimen name="fontsize6">12dp</dimen>
-    <dimen name="fontsize7">11dp</dimen>
     <dimen name="fontsize8">10dp</dimen>
-    <dimen name="fontsize9">24dp</dimen>
 </resources>

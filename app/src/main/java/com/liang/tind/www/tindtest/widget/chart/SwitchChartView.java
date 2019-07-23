@@ -5,13 +5,14 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.liang.tind.www.tindtest.R;
+
+import androidx.annotation.Nullable;
 
 import static com.liang.tind.www.tindtest.widget.chart.ChartTypeDef.LEFT;
 import static com.liang.tind.www.tindtest.widget.chart.ChartTypeDef.RIGHT;
