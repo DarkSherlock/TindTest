@@ -26,6 +26,8 @@ public class TestViewActivity extends MainActivity {
         addItem(TestWidgetActivity.class);
         addItem(TestRbtnActivity.class);
         addItem(TestRotateImageViewActivity.class);
+        addItem(TestRvActivity.class);
+        addItem(TestSoftInputActivity.class);
     }
 
     @Override

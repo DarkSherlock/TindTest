@@ -9,7 +9,7 @@ apply plugin: 'kotlin-android-extensions'
 def bakPath() {
     return file("${buildDir}/bakApk/")
 }
-
+println('** build versionName=' + System.properties['Tind'])
 /**
  * 此处填写每次构建生成的基准包目录
  */
@@ -60,8 +60,8 @@ android {
             storePassword '23259895'
         }
     }
-    compileSdkVersion COMPILE_SDK_VERSION.toInteger()
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion project.BUILD_TOOLS_VERSION
     defaultConfig {
         applicationId "com.liang.tind.www.tindtest"
         minSdkVersion MIN_SDK_VERSION.toInteger()

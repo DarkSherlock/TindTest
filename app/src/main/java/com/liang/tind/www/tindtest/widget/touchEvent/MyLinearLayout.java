@@ -47,6 +47,14 @@ public class MyLinearLayout extends LinearLayout {
     public boolean onTouchEvent(MotionEvent event) {
         Log.i(TAG, "onTouchEvent: " + event.getAction());
 //        return super.onTouchEvent(event);
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            performClick();
+        }
         return false;
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 }

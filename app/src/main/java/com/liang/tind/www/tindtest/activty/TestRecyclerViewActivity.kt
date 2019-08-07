@@ -27,7 +27,7 @@ class TestRecyclerViewActivity : BaseActivity() {
 
     override fun init() {
         //        TestRvAdapter adapter = new TestRvAdapter();
-        mRvBirthdayUsers = findViewById(R.id.rv_birthday_users)
+        mRvBirthdayUsers = findViewById(R.id.rv)
         mRvBirthdayUsers!!.layoutManager = LinearLayoutManager(this)
 
         val list = ArrayList<String>()

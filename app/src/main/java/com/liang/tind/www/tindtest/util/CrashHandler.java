@@ -46,6 +46,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
 	/** 保证只有一个CrashHandler实例 */
 	private CrashHandler() {
+
 	}
 
 	/** 获取CrashHandler实例 ,单例模式 */

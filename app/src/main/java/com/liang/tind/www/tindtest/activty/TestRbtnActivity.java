@@ -1,20 +1,20 @@
 package com.liang.tind.www.tindtest.activty;
 
-import android.app.Dialog;
-import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Environment;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
+import com.liang.tind.www.tindtest.util.FileProvier;
+
+import java.io.File;
 
 /**
  * created by Administrator
@@ -23,15 +23,15 @@ import com.liang.tind.www.tindtest.base.BaseActivity;
  */
 public class TestRbtnActivity extends BaseActivity {
 
-    private Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            boolean obj = (boolean) msg.obj;
-            Log.e(TAG, "handleMessage: "+obj);
-            return false;
-        }
-    });
-    private EditText mEditText;
+//    private Handler mHandler = new Handler(new Handler.Callback() {
+//        @Override
+//        public boolean handleMessage(Message msg) {
+//            boolean obj = (boolean) msg.obj;
+//            Log.e(TAG, "handleMessage: "+obj);
+//            return false;
+//        }
+//    });
+//    private EditText mEditText;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -69,56 +69,50 @@ public class TestRbtnActivity extends BaseActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Message obtain = Message.obtain(mHandler, 0, false);
-//                obtain.sendToTarget();
-//                new AlertDialog.Builder(TestRbtnActivity.this)
-//                        .setTitle("测试声明周期方法")
-//                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .show();
-                Dialog dialog = new Dialog(TestRbtnActivity.this);
-                dialog.setTitle("测试");
-                dialog.show();
+                File file = new File(Environment.getExternalStorageDirectory(),"/tind/小算盘平台投资人登记表.doc");
+                Log.i(TAG, "quickTest(MainActivity.java:147): exists ="+file.exists());
+                Uri fileUri = FileProvier.getUriForFile(TestRbtnActivity.this, file);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(fileUri,"application/msword");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                startActivity(intent);
             }
         });
-        LinearLayout root= findViewById(R.id.root);
-        root.setFocusable(true);
-        root.setFocusableInTouchMode(true);
-        root.requestFocus();
-
-        mEditText = findViewById(R.id.et_test);
-        mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Log.i(TAG, "onFocusChange: "+hasFocus);
-            }
-        });
+//        LinearLayout root= findViewById(R.id.root);
+//        root.setFocusable(true);
+//        root.setFocusableInTouchMode(true);
+//        root.requestFocus();
+//
+//        mEditText = findViewById(R.id.et_test);
+//        mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                Log.i(TAG, "onFocusChange: "+hasFocus);
+//            }
+//        });
 
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        //设置点击edittext外部隐藏输入法键盘
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
-
-                mEditText.clearFocus();
-                InputMethodManager manager = (InputMethodManager) mEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
-            }
-            return super.dispatchTouchEvent(ev);
-        }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) {
-            return true;
-        }
-        return onTouchEvent(ev);
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+////        //设置点击edittext外部隐藏输入法键盘
+////        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+////            View v = getCurrentFocus();
+////            if (isShouldHideInput(v, ev)) {
+////
+////                mEditText.clearFocus();
+////                InputMethodManager manager = (InputMethodManager) mEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+////                manager.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+////            }
+////            return super.dispatchTouchEvent(ev);
+////        }
+////        // 必不可少，否则所有的组件都不会有TouchEvent了
+////        if (getWindow().superDispatchTouchEvent(ev)) {
+////            return true;
+////        }
+//        return onTouchEvent(ev);
+//    }
 
     public static boolean isShouldHideInput(View v, MotionEvent event) {
         if (v != null && (v instanceof EditText)) {

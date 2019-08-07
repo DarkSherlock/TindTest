@@ -52,6 +52,10 @@
         <activity android:name=".activty.widget.TestWidgetActivity"/>
         <activity android:name=".activty.widget.TestOnTouchEventActivity"/>
         <activity android:name=".activty.widget.TestViewActivity"/>
+        <activity android:name=".activty.widget.TestRvActivity"/>
+        <activity android:name=".activty.widget.TestSoftInputActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
         <!--<activity android:name=".activty.TestLineChartActivity"/>-->
 
         <provider

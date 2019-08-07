@@ -75,6 +75,7 @@ public class TestRxjavaActivity extends BaseActivity {
 //
 //            }
 //        });
+
         List<Map<String,Integer>> list = new ArrayList<>();
         HashMap<String,Integer> map1 = new HashMap<>();
         HashMap<String,Integer> map2 = new HashMap<>();
