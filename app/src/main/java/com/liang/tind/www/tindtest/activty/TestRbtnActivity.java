@@ -1,20 +1,16 @@
 package com.liang.tind.www.tindtest.activty;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
-import com.liang.tind.www.tindtest.util.FileProvier;
-
-import java.io.File;
+import com.liang.tind.www.tindtest.util.SelectorUtils;
 
 /**
  * created by Administrator
@@ -66,17 +62,21 @@ public class TestRbtnActivity extends BaseActivity {
     @Override
     protected void init() {
         Button button = findViewById(R.id.button);
+        ImageView imageView = findViewById(R.id.image);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File file = new File(Environment.getExternalStorageDirectory(),"/tind/小算盘平台投资人登记表.doc");
-                Log.i(TAG, "quickTest(MainActivity.java:147): exists ="+file.exists());
-                Uri fileUri = FileProvier.getUriForFile(TestRbtnActivity.this, file);
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(fileUri,"application/msword");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.addCategory(Intent.CATEGORY_DEFAULT);
-                startActivity(intent);
+//                File file = new File(Environment.getExternalStorageDirectory(),"/tind/小算盘平台投资人登记表.doc");
+//                Log.i(TAG, "quickTest(MainActivity.java:147): exists ="+file.exists());
+//                Uri fileUri = FileProvier.getUriForFile(TestRbtnActivity.this, file);
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setDataAndType(fileUri,"application/msword");
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                intent.addCategory(Intent.CATEGORY_DEFAULT);
+//                startActivity(intent);
+
+                SelectorUtils.changeViewState(TestRbtnActivity.this,imageView,
+                        R.drawable.ic_launcher_background,R.color.colorAccent);
             }
         });
 //        LinearLayout root= findViewById(R.id.root);

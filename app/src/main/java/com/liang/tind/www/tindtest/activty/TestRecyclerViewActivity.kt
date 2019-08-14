@@ -34,6 +34,7 @@ class TestRecyclerViewActivity : BaseActivity() {
         for (i in 0..4) {
             list.add("test$i")
         }
+        val list1 = arrayListOf("1","12")
 
         mRvBirthdayUsers!!.adapter = RvAdapter(list, this)
     }
@@ -56,6 +57,7 @@ class TestRecyclerViewActivity : BaseActivity() {
                 list.add(item + i)
             }
             holder.setData(list)
+
         }
 
         override fun getItemCount(): Int {
@@ -66,6 +68,7 @@ class TestRecyclerViewActivity : BaseActivity() {
         internal inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var mRecyclerView: RecyclerView
             lateinit var mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
+
 
             init {
                 val root = itemView as FrameLayout

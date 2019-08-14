@@ -92,7 +92,7 @@ public class LabelChartView extends View {
         float baseline = center - (mFontMetricsInt.top + mFontMetricsInt.bottom) / 2;
 
         canvas.save();
-        Seri
+
         canvas.translate(mLabelX, center);
         mPaint.setColor(mRectFColor);
         canvas.drawRoundRect(new RectF(-width / 2, -mLabelHeight / 2, width / 2, mLabelHeight / 2), mRectFRadius, mRectFRadius, mPaint);
