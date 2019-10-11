@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.liang.tind.www.tindtest.R
 import com.liang.tind.www.tindtest.base.BaseActivity
+import kotlinx.coroutines.*
 import java.util.*
 
 /**
@@ -18,7 +19,7 @@ import java.util.*
  * created by liangtiande
  * date 2018/11/5
  */
-class TestRecyclerViewActivity : BaseActivity() {
+class TestRecyclerViewActivity : BaseActivity(), CoroutineScope by MainScope() {
     private var mRvBirthdayUsers: RecyclerView? = null
 
     override fun getLayoutId(): Int {
@@ -34,9 +35,30 @@ class TestRecyclerViewActivity : BaseActivity() {
         for (i in 0..4) {
             list.add("test$i")
         }
-        val list1 = arrayListOf("1","12")
+        val list1 = arrayListOf("1", "12")
 
         mRvBirthdayUsers!!.adapter = RvAdapter(list, this)
+        val test = Test("tind", 1);
+
+        testCoroutine()
+    }
+
+    private fun testCoroutine() {
+        launch(Dispatchers.Main) {
+            val datas = getData()
+            kotlin.run {
+                println("current threadName is ${Thread.currentThread().name}")
+                println(datas)
+            }
+        }
+    }
+
+    private suspend fun getData(): List<String> {
+       return withContext(Dispatchers.IO) {
+           println("current threadName is ${Thread.currentThread().name}")
+           delay(2000)
+           return@withContext listOf("test data")
+        }
     }
 
 
@@ -107,5 +129,23 @@ class TestRecyclerViewActivity : BaseActivity() {
                 mRecyclerView.adapter = mAdapter
             }
         }
+    }
+
+    internal class Test(name: String) {
+        var name: String
+
+        init {
+            this.name = name
+            Log.d("Tind", "init..this.name=${this.name}")
+        }
+
+        constructor(name: String, id: Int) : this(name) {
+            Log.d("Tind", "constructor..this.name=${this.name}")
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cancel()
     }
 }

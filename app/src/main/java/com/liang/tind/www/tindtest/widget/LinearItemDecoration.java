@@ -1,4 +1,4 @@
-package com.liang.tind.www.tindtest.activty.widget;
+package com.liang.tind.www.tindtest.widget;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

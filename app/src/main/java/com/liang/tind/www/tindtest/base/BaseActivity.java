@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -26,14 +27,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TAG = this.getClass().getSimpleName();
-        setContentView(getLayoutId());
+        int layoutId = getLayoutId();
+        if (layoutId != 0){
+            setContentView(layoutId);
+        }
+        ButterKnife.bind(this);
         init();
     }
 
 
-
-    protected abstract @LayoutRes
-    int getLayoutId();
+    @LayoutRes
+    protected abstract int getLayoutId();
 
     protected abstract void init();
 }

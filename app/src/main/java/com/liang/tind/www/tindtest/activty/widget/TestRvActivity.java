@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
+import com.liang.tind.www.tindtest.widget.LinearItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;

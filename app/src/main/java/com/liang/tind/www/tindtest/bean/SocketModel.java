@@ -20,7 +20,6 @@ public class SocketModel {
     public static final String EVENT_SYMBOL_SUCCESS = "symbol_success";//心跳包事件
     public static final String EVENT_PULSE = "pulse";//心跳包事件
 
-
     /**
      * sender : teacher_id
      * receiver : student_id

@@ -36,6 +36,7 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public static final int test = 885;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,7 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
 
         addItem(TestViewActivity.class);
         addItem(TestRxjavaActivity.class);
+        addItem(EmptyActivity.class);
 
     }
 
