@@ -152,5 +152,4 @@ dependencies {
     implementation rootProject.ext.androidXLibs
     implementation rootProject.ext.dependenciesLibs
     annotationProcessor rootProject.ext.annotationProcessorLibs
-
 }

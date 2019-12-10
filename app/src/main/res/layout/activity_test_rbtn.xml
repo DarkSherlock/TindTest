@@ -1,41 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorTind"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:popupTheme="?attr/actionBarPopupTheme"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
-        android:src="@drawable/ic_launcher_background"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="测试"
-        android:textColor="@drawable/selector_tv_color_evaluate_dialog_rbtn"
-        />
+        android:src="@drawable/ic_launcher_background" />
 
 
-    <!--<EditText-->
-    <!--android:layout_marginTop="10dp"-->
-    <!--android:id="@+id/et_test"-->
-    <!--android:hint="输入..."-->
-    <!--android:lines="5"-->
-    <!--android:gravity="top"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"/>-->
+    <EditText
+        android:id="@+id/et_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="top"
+        android:inputType="numberDecimal"
+        android:hint="输入..."
+        android:lines="5" />
 
     <!--<TextView-->
     <!--android:layout_width="wrap_content"-->
     <!--android:text="测试"-->
     <!--android:layout_height="wrap_content"/>-->
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/viewA"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="ViewA"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/viewB"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="viewB"
+            android:textColor="@android:color/white"
+            android:background="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="我要被拉伸"
+            android:textSize="20sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@id/viewA"
+            app:layout_constraintEnd_toStartOf="@id/viewB"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/viewC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="viewC"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_light"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewB"
+            />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintTop_toBottomOf="@+id/viewC"
+            app:layout_constraintBottom_toTopOf="@+id/viewD"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintVertical_bias="0"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:background="@android:color/holo_green_light"
+                    android:text="viewC"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+        </ScrollView>
+        <TextView
+            android:id="@+id/viewD"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="viewD"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_light"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

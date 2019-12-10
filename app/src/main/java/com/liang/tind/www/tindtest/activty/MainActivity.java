@@ -9,18 +9,15 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.liang.tind.www.tindtest.activty.widget.TestTabLayout;
 import com.liang.tind.www.tindtest.activty.widget.TestViewActivity;
 import com.liang.tind.www.tindtest.receiver.NetworkBroadcastReceiver;
 import com.liang.tind.www.tindtest.util.NetworkUtils;
 import com.liang.tind.www.tindtest.util.SocketClient;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -42,11 +39,12 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
         super.onCreate(savedInstanceState);
 //        BroadcaseReceiverFactory.registerNetworkReceiver(this, this);
 //        SocketClient.getInstance().connectToServer(SOCKET_SERVER_URL);
-         SimpleAdapter adapter = new SimpleAdapter(this, mDatas, android.R.layout.simple_list_item_1,
+        SimpleAdapter adapter = new SimpleAdapter(this, mDatas, android.R.layout.simple_list_item_1,
                 new String[]{KEY_SIMPLE_NAME}, new int[]{android.R.id.text1});
+        quickTest();
         initData();
         setListAdapter(adapter);
-        quickTest();
+
     }
 
     protected void initData() {
@@ -61,9 +59,8 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
         addItem(TestViewActivity.class);
         addItem(TestRxjavaActivity.class);
         addItem(EmptyActivity.class);
-
+        addItem(TestTabLayout.class);
     }
-
 
 
     protected void addItem(Class claszz) {
@@ -106,8 +103,8 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
     }
 
 
-    private void quickTest(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
+    private void quickTest() {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
 //
 //        String time = sdf.format(new Date());
 //        Log.e(TAG, "quickTest(MainActivity.java:128): "+time);
@@ -122,29 +119,25 @@ public class MainActivity extends ListActivity implements NetworkBroadcastReceiv
 //        }
 //        Log.e(TAG, "quickTest(MainActivity.java:138): "+date);
 //        System.out.println(date);
-        List<Integer> list = new ArrayList<>();
-        list.add(0);
-
-        list.add(2);
-
-        list.add(3);
-        list.add(8);
-        list.add(1);
-        list.add(6);
-//        list.add(1,1);
-
-        Log.i(TAG, "quickTest(MainActivity.java:130): "+list);
-        Collections.sort(list, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1 - o2;
-            }
-        });
-
-        Log.i(TAG, "quickTest(MainActivity.java:141): "+list);
-
+//        List<Integer> list = new ArrayList<>();
+//        list.add(0);
+//
+//        list.add(2);
+//
+//        list.add(3);
+//        list.add(8);
+//        list.add(1);
+//        list.add(6);
+////        list.add(1,1);
+//
+//        Log.i(TAG, "quickTest(MainActivity.java:130): "+list);
+//        Collections.sort(list, new Comparator<Integer>() {
+//            @Override
+//            public int compare(Integer o1, Integer o2) {
+//                return o1 - o2;
+//            }
+//        });
+//
+//        Log.i(TAG, "quickTest(MainActivity.java:141): "+list);
     }
-
-
-
 }

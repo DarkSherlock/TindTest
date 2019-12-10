@@ -29,6 +29,7 @@ public class TestViewActivity extends MainActivity {
         addItem(TestRvActivity.class);
         addItem(TestSoftInputActivity.class);
         addItem(TestMotionLayoutActivity.class);
+        addItem(TestSwitchActivity.class);
     }
 
     @Override

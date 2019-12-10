@@ -11,12 +11,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.liang.tind.www.tindtest.R;
-import com.liang.tind.www.tindtest.util.RxBus;
-import com.liang.tind.www.tindtest.util.SocketClient;
+import com.liang.tind.www.tindtest.base.BaseActivity;
 import com.liang.tind.www.tindtest.bean.SocketCloseBean;
 import com.liang.tind.www.tindtest.bean.SocketModel;
 import com.liang.tind.www.tindtest.bean.SocketOpenBean;
-import com.liang.tind.www.tindtest.base.BaseActivity;
+import com.liang.tind.www.tindtest.util.RxBusFlowable;
+import com.liang.tind.www.tindtest.util.SocketClient;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -92,12 +92,11 @@ public class TestSocketActivity extends BaseActivity implements SocketClient.Soc
         mSocketClient.addSocketListener(this);
         System.setProperty("java.net.preferIPv6Addresses", "false");
         System.setProperty("java.net.preferIPv4Stack", "true");
-
-        RxBus.getInstance().doSubscribe(Integer.class, new Subscriber<Integer>() {
+        RxBusFlowable.getInstance().doSubscribe(Integer.class, new Subscriber<Integer>() {
             @Override
             public void onSubscribe(Subscription s) {
                 mSubscription = s;
-                RxBus.getInstance().addSubscription(TestSocketActivity.this,s);
+                RxBusFlowable.getInstance().addSubscription(TestSocketActivity.this,s);
                 s.request(1);
             }
 
@@ -134,7 +133,7 @@ public class TestSocketActivity extends BaseActivity implements SocketClient.Soc
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().unSubscribe(this);
+        RxBusFlowable.getInstance().unSubscribe(this);
         mSocketClient.removeSocketListener(this);
     }
 

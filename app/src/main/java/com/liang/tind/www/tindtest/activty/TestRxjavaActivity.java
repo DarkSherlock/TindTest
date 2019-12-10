@@ -1,9 +1,11 @@
 package com.liang.tind.www.tindtest.activty;
 
 import android.util.Log;
+import android.view.View;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
+import com.liang.tind.www.tindtest.util.RxBus;
 
 import org.reactivestreams.Subscription;
 
@@ -12,15 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.functions.Consumer;
 
 /**
  * created by Administrator
@@ -32,7 +26,16 @@ public class TestRxjavaActivity extends BaseActivity {
 
     private boolean isComplete = true;
     Subscription mDisposable;
+    public static final String EVENT_NAME = "EventName";
+    public static final String EVENT_NAME_ANOTHER = "EventNameAnother";
+    public static final String EVENT_NAME_INT = "EventNameInt";
+    private RxBus.Event<String> mEvent;
+    private RxBus.Event<String> mEventString;
+    private RxBus.Event<Integer> mEventInt;
 
+    private int mCode = 100;
+    private int mCodeAnother = 101;
+    private int mCodeInt = 111;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_test_rxjava;
@@ -40,6 +43,42 @@ public class TestRxjavaActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        // TODO: 2019/12/6  test
+        mEvent = new RxBus.Event<>();
+        mEvent.setEventName(EVENT_NAME);
+        mEvent.setData("test data");
+
+        mEventString = new RxBus.Event<>();
+        mEventString.setEventName(EVENT_NAME_ANOTHER);
+        mEventString.setData("another test data");
+
+        mEventInt = new RxBus.Event<>();
+        mEventInt.setEventName(EVENT_NAME_INT);
+        mEventInt.setData(100);
+
+        RxBus.getInstance().doSubscribe(mCode, EVENT_NAME, new Consumer<RxBus.Event<String>>() {
+            @Override
+            public void accept(RxBus.Event<String> event) throws Exception {
+                Log.i("Main", "accept(MainActivity.java:147) data: " + event.getData() + ",event:" + event.getEventName());
+            }
+        });
+
+
+        RxBus.getInstance().doSubscribe(mCodeAnother, EVENT_NAME_INT, new Consumer<RxBus.Event<Integer>>() {
+            @Override
+            public void accept(RxBus.Event<Integer> event) throws Exception {
+                Log.i(TAG, "accept(MainActivity.java:147) data: "+event.getData()+",event:"+event.getEventName());
+            }
+        });
+
+        RxBus.getInstance().doSubscribe(mCodeInt, EVENT_NAME_ANOTHER, new Consumer<RxBus.Event<String>>() {
+            @Override
+            public void accept(RxBus.Event<String> event) throws Exception {
+                Log.i(TAG, "accept(MainActivity.java:147) data: "+event.getData()+",event:"+event.getEventName());
+            }
+        });
+
+
 //        List<String> strings = new ArrayList<>();
 //        for (int i = 0; i < 5; i++) {
 //            strings.add(String.valueOf(i));
@@ -76,60 +115,97 @@ public class TestRxjavaActivity extends BaseActivity {
 //            }
 //        });
 
-        List<Map<String,Integer>> list = new ArrayList<>();
-        HashMap<String,Integer> map1 = new HashMap<>();
-        HashMap<String,Integer> map2 = new HashMap<>();
-        map1.put("key",1);
-        map2.put("key",2);
+        List<Map<String, Integer>> list = new ArrayList<>();
+        HashMap<String, Integer> map1 = new HashMap<>();
+        HashMap<String, Integer> map2 = new HashMap<>();
+        map1.put("key", 1);
+        map2.put("key", 2);
         list.add(map1);
         list.add(map2);
 //        list.add(3+"");
 //        list.add(4+"");
-        Observable.fromIterable(list)
-                .subscribeOn(Schedulers.io())
-                .flatMap(new Function<Map<String,Integer>, ObservableSource<Map<String,Integer>>>() {
-                    @Override
-                    public ObservableSource<Map<String,Integer>> apply(Map<String,Integer> value) throws Exception {
-                        Observable<Map<String,Integer>> observable = Observable.create(new ObservableOnSubscribe<Map<String,Integer>>() {
-                            @Override
-                            public void subscribe(ObservableEmitter<Map<String,Integer>> emitter) throws Exception {
-                                Log.i(TAG, "apply(TestRxjavaActivity.java:79): " + value);
-                                if (value.get("key") == 2) {
-                                    Thread.sleep(1000);
-                                    value.put("key",3);
-                                    Log.i(TAG, "apply(TestRxjavaActivity.java:84): wake up");
-                                }
-                                emitter.onNext(value);
-                                emitter.onComplete();
-                            }
-                        }).subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread());
+//        Observable.fromIterable(list)
+//                .subscribeOn(Schedulers.io())
+//                .flatMap(new Function<Map<String,Integer>, ObservableSource<Map<String,Integer>>>() {
+//                    @Override
+//                    public ObservableSource<Map<String,Integer>> apply(Map<String,Integer> value) throws Exception {
+//                        Observable<Map<String,Integer>> observable = Observable.create(new ObservableOnSubscribe<Map<String,Integer>>() {
+//                            @Override
+//                            public void subscribe(ObservableEmitter<Map<String,Integer>> emitter) throws Exception {
+//                                Log.i(TAG, "apply(TestRxjavaActivity.java:79): " + value);
+//                                if (value.get("key") == 2) {
+//                                    Thread.sleep(1000);
+//                                    value.put("key",3);
+//                                    Log.i(TAG, "apply(TestRxjavaActivity.java:84): wake up");
+//                                }
+//                                emitter.onNext(value);
+//                                emitter.onComplete();
+//                            }
+//                        }).subscribeOn(Schedulers.newThread())
+//                                .observeOn(AndroidSchedulers.mainThread());
+//
+//                        return observable;
+//                    }
+//                })
+//                .subscribe(new Observer<Map<String, Integer>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        Log.i(TAG, "onSubscribe(TestRxjavaActivity.java:113): ");
+//                    }
+//
+//                    @Override
+//                    public void onNext(Map<String, Integer> stringIntegerMap) {
+//                        Log.i(TAG, "onNext(TestRxjavaActivity.java:118): "+stringIntegerMap);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.w(TAG, "onError(TestRxjavaActivity.java:123): ",e);
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        Log.i(TAG, "onComplete(TestRxjavaActivity.java:128): ");
+//                    }
+//                });
 
-                        return observable;
-                    }
-                })
-                .subscribe(new Observer<Map<String, Integer>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.i(TAG, "onSubscribe(TestRxjavaActivity.java:113): ");
-                    }
-
-                    @Override
-                    public void onNext(Map<String, Integer> stringIntegerMap) {
-                        Log.i(TAG, "onNext(TestRxjavaActivity.java:118): "+stringIntegerMap);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.w(TAG, "onError(TestRxjavaActivity.java:123): ",e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.i(TAG, "onComplete(TestRxjavaActivity.java:128): ");
-                    }
-                });
-
+//        Disposable subscribe = Observable.create((ObservableOnSubscribe<Integer>) emitter -> {
+//            Log.i(TAG, "emitter 1");
+//            emitter.onNext(1);
+//
+////            Thread.sleep(600);
+//            Log.i(TAG, "emitter 2");
+//            emitter.onNext(2);
+//
+////            Thread.sleep(100);
+//            Log.i(TAG, "emitter 3");
+//            emitter.onNext(3);
+//
+////            Thread.sleep(100);
+//            Log.i(TAG, "emitter 4");
+//            emitter.onNext(4);
+//
+////            Thread.sleep(600);
+//            Log.i(TAG, "emitter 5");
+//            emitter.onNext(5);
+//        }).debounce(500, TimeUnit.MILLISECONDS)
+//
+//                .subscribe(integer -> {
+//                    Log.i(TAG, "init(TestRxjavaActivity.java:134): " + integer);
+//                });
     }
 
+    public void post(View v) {
+        RxBus.getInstance().post(mEvent);
+        RxBus.getInstance().post(mEventString);
+        RxBus.getInstance().post(mEventInt);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().unSubscribe(mCode);
+        RxBus.getInstance().unSubscribe(mCodeInt);
+        RxBus.getInstance().unSubscribe(mCodeAnother);
+    }
 }

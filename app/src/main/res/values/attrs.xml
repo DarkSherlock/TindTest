@@ -23,4 +23,6 @@
         <attr name="gradientFromColor" format="color"/>
         <attr name="gradientToColor" format="color"/>
     </declare-styleable>
+
+    <attr name="colorTind" format="color"/>
 </resources>

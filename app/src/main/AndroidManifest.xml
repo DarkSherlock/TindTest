@@ -25,7 +25,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".activty.EmptyActivity"></activity>
+        <activity android:name=".activty.EmptyActivity"/>
         <activity android:name=".activty.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,7 +55,9 @@
         <activity
             android:name=".activty.widget.TestSoftInputActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activty.widget.TestMotionLayoutActivity" /> <!-- <activity android:name=".activty.TestLineChartActivity"/> -->
+        <activity android:name=".activty.widget.TestMotionLayoutActivity" />
+        <activity android:name=".activty.widget.TestTabLayout" />
+        <activity android:name=".activty.widget.TestSwitchActivity" /> <!-- <activity android:name=".activty.TestLineChartActivity"/> -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"

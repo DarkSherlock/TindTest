@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
-import com.liang.tind.www.tindtest.util.SelectorUtils;
+import com.liang.tind.www.tindtest.widget.DigitsTextWatcher;
 
 /**
  * created by Administrator
@@ -27,7 +25,7 @@ public class TestRbtnActivity extends BaseActivity {
 //            return false;
 //        }
 //    });
-//    private EditText mEditText;
+    private EditText mEditText;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -61,11 +59,11 @@ public class TestRbtnActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        Button button = findViewById(R.id.button);
-        ImageView imageView = findViewById(R.id.image);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        Button button = findViewById(R.id.button);
+//        ImageView imageView = findViewById(R.id.image);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 //                File file = new File(Environment.getExternalStorageDirectory(),"/tind/小算盘平台投资人登记表.doc");
 //                Log.i(TAG, "quickTest(MainActivity.java:147): exists ="+file.exists());
 //                Uri fileUri = FileProvier.getUriForFile(TestRbtnActivity.this, file);
@@ -74,23 +72,25 @@ public class TestRbtnActivity extends BaseActivity {
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 //                intent.addCategory(Intent.CATEGORY_DEFAULT);
 //                startActivity(intent);
-
-                SelectorUtils.changeViewState(TestRbtnActivity.this,imageView,
-                        R.drawable.ic_launcher_background,R.color.colorAccent);
-            }
-        });
+//
+//                SelectorUtils.changeViewState(TestRbtnActivity.this,imageView,
+//                        R.drawable.ic_launcher_background,R.color.colorAccent);
+//            }
+//        });
 //        LinearLayout root= findViewById(R.id.root);
 //        root.setFocusable(true);
 //        root.setFocusableInTouchMode(true);
 //        root.requestFocus();
 //
-//        mEditText = findViewById(R.id.et_test);
+        mEditText = findViewById(R.id.et_test);
 //        mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
 //            public void onFocusChange(View v, boolean hasFocus) {
 //                Log.i(TAG, "onFocusChange: "+hasFocus);
 //            }
 //        });
+
+        mEditText.addTextChangedListener(new DigitsTextWatcher(mEditText,2));
 
     }
 

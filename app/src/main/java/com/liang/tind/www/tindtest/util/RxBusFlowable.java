@@ -13,9 +13,9 @@ import io.reactivex.processors.PublishProcessor;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class RxBus {
-    private static final String TAG = "Rxbus";
-    private static volatile RxBus mInstance;
+public class RxBusFlowable {
+    private static final String TAG = "RxBus";
+    private static volatile RxBusFlowable mInstance;
     private HashMap<String, Subscription> mSubscriptionMap;
     private FlowableProcessor<Object> mBus;
 
@@ -24,7 +24,7 @@ public class RxBus {
      *  Subject同时充当了Observer和Observable的角色，Subject是非线程安全的，要避免该问题，
      *  需要将 Subject转换为一个 SerializedSubject ，上述RxBus类中把线程非安全的PublishSubject包装成线程安全的Subject。
      */
-    private RxBus() {
+    private RxBusFlowable() {
         mBus = PublishProcessor.create().toSerialized();
     }
 
@@ -32,11 +32,11 @@ public class RxBus {
      * 单例 双重锁
      * @return
      */
-    public static RxBus getInstance() {
+    public static RxBusFlowable getInstance() {
         if (mInstance == null) {
-            synchronized (RxBus.class) {
+            synchronized (RxBusFlowable.class) {
                 if (mInstance == null) {
-                    mInstance = new RxBus();
+                    mInstance = new RxBusFlowable();
                 }
             }
         }
@@ -47,8 +47,8 @@ public class RxBus {
      * 发送一个新的事件
      * @param o
      */
-    public void post(Event event) {
-        mBus.onNext(event);
+    public void post(Object o) {
+        mBus.onNext(o);
     }
 
     /**
@@ -70,10 +70,10 @@ public class RxBus {
                 .subscribe(subscriber);
     }
 
+    public void addSubscription(Object o, Subscription subscription) {
 
-    private void addSubscription(int code, Disposable disposable) {
-        if (mSubscriptionSpa == null) {
-            mSubscriptionSpa = new SparseArray<>();
+        if (mSubscriptionMap == null) {
+            mSubscriptionMap = new HashMap<>();
         }
         String key = o.getClass().getName();
         if (mSubscriptionMap.get(key)==null) mSubscriptionMap.put(key, subscription);

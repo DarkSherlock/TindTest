@@ -1,13 +1,11 @@
 package com.liang.tind.www.tindtest.activty.widget;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
 
-import androidx.constraintlayout.motion.widget.MotionLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -19,8 +17,8 @@ import butterknife.OnClick;
 public class TestMotionLayoutActivity extends BaseActivity {
     @BindView(R.id.button)
     Button mButton;
-    @BindView(R.id.motion_layout)
-    MotionLayout mMotionLayout;
+//    @BindView(R.id.motion_layout)
+//    MotionLayout mMotionLayout;
     /**
      * button 是否在top位置
      */
@@ -33,36 +31,37 @@ public class TestMotionLayoutActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        mMotionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
-            @Override
-            public void onTransitionStarted(MotionLayout motionLayout, int i, int i1) {
-                Log.i(TAG, "onTransitionStarted: i="+i+",i1="+i1);
-            }
+//        mMotionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
+//            @Override
+//            public void onTransitionStarted(MotionLayout motionLayout, int i, int i1) {
+//                Log.i(TAG, "onTransitionStarted: i="+i+",i1="+i1);
+//            }
+//
+//            @Override
+//            public void onTransitionChange(MotionLayout motionLayout, int i, int i1, float v) {
+//                Log.i(TAG, "onTransitionChange: i="+i+",i1="+i1+",v="+v);
+//            }
+//
+//            @Override
+//            public void onTransitionCompleted(MotionLayout motionLayout, int i) {
+//                Log.i(TAG, "onTransitionCompleted : i="+i);
+//            }
+//
+//            @Override
+//            public void onTransitionTrigger(MotionLayout motionLayout, int i, boolean b, float v) {
+//                Log.i(TAG, "onTransitionTrigger:i="+i+",b="+b+",v="+v);
+//            }
+//        });
 
-            @Override
-            public void onTransitionChange(MotionLayout motionLayout, int i, int i1, float v) {
-                Log.i(TAG, "onTransitionChange: i="+i+",i1="+i1+",v="+v);
-            }
-
-            @Override
-            public void onTransitionCompleted(MotionLayout motionLayout, int i) {
-                Log.i(TAG, "onTransitionCompleted : i="+i);
-            }
-
-            @Override
-            public void onTransitionTrigger(MotionLayout motionLayout, int i, boolean b, float v) {
-                Log.i(TAG, "onTransitionTrigger:i="+i+",b="+b+",v="+v);
-            }
-        });
     }
 
     @OnClick(R.id.button)
     public void startMotionAnimation(View v) {
-        if (isTop) {
-            mMotionLayout.transitionToStart();
-        } else {
-            mMotionLayout.transitionToEnd();
-        }
+//        if (isTop) {
+//            mMotionLayout.transitionToStart();
+//        } else {
+//            mMotionLayout.transitionToEnd();
+//        }
         isTop = !isTop;
     }
 }
