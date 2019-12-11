@@ -1,35 +1,33 @@
 package com.liang.tind.www.tindtest.util;
 
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
+import android.util.Log;
+import android.util.SparseArray;
 
-import java.util.HashMap;
-
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.processors.FlowableProcessor;
-import io.reactivex.processors.PublishProcessor;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 
 public class RxBus {
     private static final String TAG = "Rxbus";
     private static volatile RxBus mInstance;
-    private HashMap<String, Subscription> mSubscriptionMap;
-    private FlowableProcessor<Object> mBus;
+    private SparseArray<Disposable> mSubscriptionSpa;
+    private Subject<Object> mBus;
 
-    /**
-     *  PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
-     *  Subject同时充当了Observer和Observable的角色，Subject是非线程安全的，要避免该问题，
-     *  需要将 Subject转换为一个 SerializedSubject ，上述RxBus类中把线程非安全的PublishSubject包装成线程安全的Subject。
-     */
     private RxBus() {
-        mBus = PublishProcessor.create().toSerialized();
+        mBus = PublishSubject.create().toSerialized();
     }
 
     /**
      * 单例 双重锁
+     *
      * @return
      */
     public static RxBus getInstance() {
@@ -45,7 +43,8 @@ public class RxBus {
 
     /**
      * 发送一个新的事件
-     * @param o
+     *
+     * @param event
      */
     public void post(Event event) {
         mBus.onNext(event);
@@ -53,21 +52,24 @@ public class RxBus {
 
     /**
      * 根据传递的 eventType 类型返回特定类型(eventType)的 被观察者
+     *
      * @param type
      * @param <T>
      * @return
      */
-    public <T> Flowable<T> tObservable(final Class<T> type) {
+    private <T> Observable<T> tObservable(final Class<T> type) {
         //ofType操作符只发射指定类型的数据，其内部就是filter+cast
         return mBus.ofType(type);
     }
 
-    public <T> void doSubscribe(Class<T> type,Subscriber<T> subscriber) {
-        tObservable(type)
+    public <T> void doSubscribe(int code, String eventName, Consumer<Event<T>> subscriber) {
+        Disposable subscribe = tObservable(Event.class)
+                .filter(post -> post.getEventName().equals(eventName))
+                .flatMap((Function<Event, ObservableSource<Event<T>>>) Observable::just)
                 .subscribeOn(Schedulers.io())
-                .onBackpressureLatest()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+        addSubscription(code, subscribe);
     }
 
 
@@ -75,22 +77,43 @@ public class RxBus {
         if (mSubscriptionSpa == null) {
             mSubscriptionSpa = new SparseArray<>();
         }
-        String key = o.getClass().getName();
-        if (mSubscriptionMap.get(key)==null) mSubscriptionMap.put(key, subscription);
+        if (mSubscriptionSpa.get(code) == null) {
+            mSubscriptionSpa.put(code, disposable);
+        } else {
+            Log.w(TAG, "Add the duplicate code", new IllegalArgumentException() );
+        }
     }
 
-    public void unSubscribe(Object o) {
-        if (mSubscriptionMap == null) {
+    public void unSubscribe(int code) {
+        if (mSubscriptionSpa == null) {
             return;
         }
-        String key = o.getClass().getName();
-        if (!mSubscriptionMap.containsKey(key)) {
-            return;
+        Disposable disposable = mSubscriptionSpa.get(code);
+        if (disposable != null) {
+            disposable.dispose();
         }
-        if (mSubscriptionMap.get(key) != null) {
-            mSubscriptionMap.get(key).cancel();
-        }
-        mSubscriptionMap.remove(key);
+        mSubscriptionSpa.remove(code);
     }
 
+
+    public static class Event<T> {
+        String eventName;
+        T data;
+
+        public String getEventName() {
+            return eventName;
+        }
+
+        public void setEventName(String eventName) {
+            this.eventName = eventName;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public void setData(T data) {
+            this.data = data;
+        }
+    }
 }
