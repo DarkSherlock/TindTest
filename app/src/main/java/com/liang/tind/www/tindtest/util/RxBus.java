@@ -1,12 +1,13 @@
 package com.liang.tind.www.tindtest.util;
 
 
-import android.util.Log;
-import android.util.SparseArray;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -18,7 +19,7 @@ import io.reactivex.subjects.Subject;
 public class RxBus {
     private static final String TAG = "Rxbus";
     private static volatile RxBus mInstance;
-    private SparseArray<Disposable> mSubscriptionSpa;
+    private Map<Object, CompositeDisposable> mSubscriptionSpa;
     private Subject<Object> mBus;
 
     private RxBus() {
@@ -62,43 +63,53 @@ public class RxBus {
         return mBus.ofType(type);
     }
 
-    public <T> void doSubscribe(int code, String eventName, Consumer<Event<T>> subscriber) {
+    public <T> void doSubscribe(Object key, String eventName, Consumer<Event<T>> subscriber) {
         Disposable subscribe = tObservable(Event.class)
                 .filter(post -> post.getEventName().equals(eventName))
                 .flatMap((Function<Event, ObservableSource<Event<T>>>) Observable::just)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
-        addSubscription(code, subscribe);
+
+        addSubscription(key, subscribe);
     }
 
 
-    private void addSubscription(int code, Disposable disposable) {
+    private void addSubscription(Object key, Disposable disposable) {
         if (mSubscriptionSpa == null) {
-            mSubscriptionSpa = new SparseArray<>();
+            mSubscriptionSpa = new HashMap<>();
         }
-        if (mSubscriptionSpa.get(code) == null) {
-            mSubscriptionSpa.put(code, disposable);
-        } else {
-            Log.w(TAG, "Add the duplicate code", new IllegalArgumentException() );
+        CompositeDisposable compositeDisposable = mSubscriptionSpa.get(key);
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable(disposable);
+            mSubscriptionSpa.put(key, compositeDisposable);
         }
+        compositeDisposable.add(disposable);
     }
 
-    public void unSubscribe(int code) {
+    public void unSubscribe(Object key) {
         if (mSubscriptionSpa == null) {
             return;
         }
-        Disposable disposable = mSubscriptionSpa.get(code);
+        CompositeDisposable disposable = mSubscriptionSpa.get(key);
         if (disposable != null) {
             disposable.dispose();
         }
-        mSubscriptionSpa.remove(code);
+        mSubscriptionSpa.remove(key);
     }
 
 
     public static class Event<T> {
         String eventName;
         T data;
+
+        public Event() {
+        }
+
+        public Event(String eventName, T data) {
+            this.eventName = eventName;
+            this.data = data;
+        }
 
         public String getEventName() {
             return eventName;

@@ -56,7 +56,7 @@ public class TestRxjavaActivity extends BaseActivity {
         mEventInt.setEventName(EVENT_NAME_INT);
         mEventInt.setData(100);
 
-        RxBus.getInstance().doSubscribe(mCode, EVENT_NAME, new Consumer<RxBus.Event<String>>() {
+        RxBus.getInstance().doSubscribe(this, EVENT_NAME, new Consumer<RxBus.Event<String>>() {
             @Override
             public void accept(RxBus.Event<String> event) throws Exception {
                 Log.i("Main", "accept(MainActivity.java:147) data: " + event.getData() + ",event:" + event.getEventName());
@@ -64,14 +64,14 @@ public class TestRxjavaActivity extends BaseActivity {
         });
 
 
-        RxBus.getInstance().doSubscribe(mCodeAnother, EVENT_NAME_INT, new Consumer<RxBus.Event<Integer>>() {
+        RxBus.getInstance().doSubscribe(this, EVENT_NAME_INT, new Consumer<RxBus.Event<Integer>>() {
             @Override
             public void accept(RxBus.Event<Integer> event) throws Exception {
                 Log.i(TAG, "accept(MainActivity.java:147) data: "+event.getData()+",event:"+event.getEventName());
             }
         });
 
-        RxBus.getInstance().doSubscribe(mCodeInt, EVENT_NAME_ANOTHER, new Consumer<RxBus.Event<String>>() {
+        RxBus.getInstance().doSubscribe(this, EVENT_NAME_ANOTHER, new Consumer<RxBus.Event<String>>() {
             @Override
             public void accept(RxBus.Event<String> event) throws Exception {
                 Log.i(TAG, "accept(MainActivity.java:147) data: "+event.getData()+",event:"+event.getEventName());
@@ -204,8 +204,8 @@ public class TestRxjavaActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().unSubscribe(mCode);
-        RxBus.getInstance().unSubscribe(mCodeInt);
-        RxBus.getInstance().unSubscribe(mCodeAnother);
+        RxBus.getInstance().unSubscribe(this);
+        RxBus.getInstance().unSubscribe(this);
+        RxBus.getInstance().unSubscribe(this);
     }
 }

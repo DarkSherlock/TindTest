@@ -86,7 +86,8 @@ ext {
             "glide" :  "com.github.bumptech.glide:glide:${version.glideSdkVersion}",
 
             //kotlin
-            "kotlinCoroutines" : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.1"
+            "kotlinCoroutines" : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.1",
+            "leakCanary" : "com.squareup.leakcanary:leakcanary-android:1.5"
     ]
 
     annotationProcessor = [

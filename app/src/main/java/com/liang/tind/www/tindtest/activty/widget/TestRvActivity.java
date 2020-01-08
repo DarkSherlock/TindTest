@@ -34,7 +34,7 @@ public class TestRvActivity extends BaseActivity {
 
     List<String> mList = new ArrayList<>();
 
-    public static final int DEFAULT_COUNT = 10;
+    public static final int DEFAULT_COUNT = 20;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_test_recycler_view;
@@ -51,9 +51,13 @@ public class TestRvActivity extends BaseActivity {
 
         Adapter adapter = new Adapter(mList,this);
         adapter.setOnAdd((v,position) -> {
-            mList.add(position,"Test Data Add"+ add++);
+//            mList.add(position,"Test Data Add"+ add++);
             Log.i(TAG, "onAdd: position="+position);
-            adapter.notifyItemInserted(position);
+//            adapter.notifyItemInserted(position);
+            mList.set(0,"test notify data");
+            adapter.notifyDataSetChanged();
+//            Collections.swap(mList,0,2);
+//            adapter.notifyItemMoved(0,2);
         });
 
         adapter.setOnRemove((v,position) -> {
@@ -79,30 +83,33 @@ public class TestRvActivity extends BaseActivity {
         public Adapter(@NonNull List<String> list, @NonNull Context context) {
             mList = list;
             mContext = context;
+            setHasStableIds(true);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return mList.get(position).hashCode();
         }
 
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            Log.i(TAG, "onCreateViewHolder =========>");
             LinearLayout linearLayout = new LinearLayout(mContext);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-            linearLayout.setBackgroundColor(Color.parseColor("#ff99cc00"));
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT);
+            linearLayout.setBackgroundColor(Color.GREEN);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
 //            params.setMargins(30,30,30,30);
             linearLayout.setLayoutParams(params);
 
-
-
             ViewHolder viewHolder = new ViewHolder(linearLayout);
-
+            Log.i(TAG, "onCreateViewHolder =========>"+viewHolder);
             return viewHolder;
         }
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            Log.i(TAG, "onBindViewHolder(Adapter.java:80): position="+position+",data="+mList.get(position));
+            Log.i(TAG, " position="+position+",data="+mList.get(position)+"bind:"+holder);
             holder.mAdd.setOnClickListener(v -> {
                 onAdd.onAdd(v,holder.getAdapterPosition());
             });
@@ -111,6 +118,12 @@ public class TestRvActivity extends BaseActivity {
             });
 
             holder.mTextView.setText(mList.get(position));
+        }
+
+        @Override
+        public void onViewRecycled(@NonNull ViewHolder holder) {
+            super.onViewRecycled(holder);
+            Log.i(TAG, "onViewRecycled(Adapter.java:125): "+holder);
         }
 
         @Override
@@ -147,10 +160,10 @@ public class TestRvActivity extends BaseActivity {
             Context context = itemView.getContext();
             mTextView = new TextView(context);
             mTextView.setBackgroundColor(Color.parseColor("#ffff8800"));
-            FrameLayout.LayoutParams wrapParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams wrapParams = new LinearLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
                     FrameLayout.LayoutParams.WRAP_CONTENT);
             wrapParams.setMargins(30, 30, 30, 30);
-            mTextView.setLayoutParams(new FrameLayout.LayoutParams(wrapParams));
+            mTextView.setLayoutParams(wrapParams);
 
             mAdd = new Button(context);
             mAdd.setText("add");

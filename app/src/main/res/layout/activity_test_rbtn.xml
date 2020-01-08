@@ -75,7 +75,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:text="我要被拉伸"
+            android:text="我要被拉伸我要被拉伸我要被拉伸我要被拉伸"
             android:textSize="20sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/viewA"
@@ -137,4 +137,30 @@
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/viewE"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="viewE"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_light"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="viewG"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_light"
+            android:layout_below="@+id/viewE"
+            android:layout_alignParentEnd="true"
+            />
+    </RelativeLayout>
 </LinearLayout>

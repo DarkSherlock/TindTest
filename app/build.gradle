@@ -148,7 +148,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('libs/facetracking.jar')
-
     implementation rootProject.ext.androidXLibs
     implementation rootProject.ext.dependenciesLibs
     annotationProcessor rootProject.ext.annotationProcessorLibs

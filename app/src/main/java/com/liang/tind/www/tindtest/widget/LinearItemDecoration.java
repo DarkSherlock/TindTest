@@ -38,7 +38,7 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
                 if (parent.getChildAdapterPosition(view) == layoutManager.getItemCount() - 1) {
                     outRect.bottom = topBottom;
                 }
-                outRect.top = topBottom + 50;
+                outRect.top = topBottom;
                 outRect.left = leftRight;
                 outRect.right = leftRight;
             } else {

@@ -30,7 +30,7 @@ class TestRecyclerViewActivity : BaseActivity(), CoroutineScope by MainScope() {
         //        TestRvAdapter adapter = new TestRvAdapter();
         mRvBirthdayUsers = findViewById(R.id.rv)
         mRvBirthdayUsers!!.layoutManager = LinearLayoutManager(this)
-
+        this.intent = null;
         val list = ArrayList<String>()
         for (i in 0..4) {
             list.add("test$i")

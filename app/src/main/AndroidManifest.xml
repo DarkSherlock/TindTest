@@ -14,7 +14,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <!--  给service 设置自定义权限 signature 模式 要求服务端和客户端都用同个签名文件 才允许被访问  -->
+    <permission
+        android:name="com.tind.liang.permission.ACCESS_SERVER"
+        android:protectionLevel="signature" />
     <application
         android:name=".base.TindApplication"
         android:allowBackup="true"
@@ -25,7 +28,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".activty.EmptyActivity"/>
+        <activity android:name=".activty.EmptyActivity" />
         <activity android:name=".activty.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,6 +70,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+        <service
+            android:name=".service.RemoteService"
+            android:permission="com.tind.liang.permission.ACCESS_SERVER">
+            <intent-filter>
+                <action android:name="com.tind.liang.test.server.action" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
