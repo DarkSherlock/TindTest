@@ -53,5 +53,7 @@ public class TestHRFace extends BaseActivity {
                 Log.e(TAG, "run(TestHRFace.java:52): bitmap height="+bitmap.getHeight());
             }
         });
+
+
     }
 }

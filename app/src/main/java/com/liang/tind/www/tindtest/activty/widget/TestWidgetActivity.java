@@ -1,19 +1,16 @@
 package com.liang.tind.www.tindtest.activty.widget;
 
-import android.content.res.ColorStateList;
+import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.google.android.material.tabs.TabLayout;
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 /**
  * desc
@@ -35,6 +32,25 @@ public class TestWidgetActivity extends BaseActivity {
     @Override
     protected void init() {
         TextView textView = findViewById(R.id.text);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                int width = textView.getWidth();
+                int getMeasuredWidth = textView.getMeasuredWidth();
+                int height = textView.getHeight();
+                int getMeasuredHeight = textView.getMeasuredHeight();
+
+                Log.i(TAG, "width: "+width+",getMeasuredWidth: "+getMeasuredWidth+",height:"+height+",getMeasuredHeight:"+getMeasuredHeight);
+            }
+        });
+
+        textView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.i(TAG, "onGlobalLayout(TestWidgetActivity.java:50): ");
+            }
+        });
+
         textView.setText("Fuck this shit code,Fuck 艹");
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -72,45 +88,13 @@ public class TestWidgetActivity extends BaseActivity {
 
         textView.setText(Html.fromHtml(test));
 
-        TabLayout tabLayout  = new TabLayout(this);
-        tabLayout.addOnTabSelectedListener(null);
-
-        SwitchCompat switchCompat = findViewById(R.id.switch_anonymous_question);
-//        setSwitchColor(switchCompat);
+        Log.i(TAG, "init(TestWidgetActivity.java:91): ");
     }
 
 
-    public static void setSwitchColor(SwitchCompat v) {
-
-        // thumb color
-        int thumbColor = 0xffff0000;
-
-        // trackColor
-        int trackColor = 0xffdddddd;
-
-        // set the thumb color
-        DrawableCompat.setTintList(v.getThumbDrawable(), new ColorStateList(
-                new int[][]{
-                        new int[]{android.R.attr.state_checked},
-                        new int[]{}
-                },
-                new int[]{
-                        thumbColor,
-                        thumbColor
-                }));
-
-        // set the track color
-        DrawableCompat.setTintList(v.getTrackDrawable(), new ColorStateList(
-                new int[][]{
-                        new int[]{android.R.attr.state_checked},
-                        new int[]{}
-                },
-                new int[]{
-                        thumbColor,
-                        trackColor
-                }));
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume(TestWidgetActivity.java:98): ");
     }
-
 }

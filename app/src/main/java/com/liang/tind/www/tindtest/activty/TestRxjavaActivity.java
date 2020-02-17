@@ -1,5 +1,6 @@
 package com.liang.tind.www.tindtest.activty;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -14,7 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.functions.Consumer;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 /**
  * created by Administrator
@@ -36,6 +41,8 @@ public class TestRxjavaActivity extends BaseActivity {
     private int mCode = 100;
     private int mCodeAnother = 101;
     private int mCodeInt = 111;
+    ObservableEmitter<Object> mEmitter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_test_rxjava;
@@ -43,40 +50,79 @@ public class TestRxjavaActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        // TODO: 2019/12/6  test
-        mEvent = new RxBus.Event<>();
-        mEvent.setEventName(EVENT_NAME);
-        mEvent.setData("test data");
 
-        mEventString = new RxBus.Event<>();
-        mEventString.setEventName(EVENT_NAME_ANOTHER);
-        mEventString.setData("another test data");
-
-        mEventInt = new RxBus.Event<>();
-        mEventInt.setEventName(EVENT_NAME_INT);
-        mEventInt.setData(100);
-
-        RxBus.getInstance().doSubscribe(this, EVENT_NAME, new Consumer<RxBus.Event<String>>() {
+        Observable.create(new ObservableOnSubscribe<Object>() {
             @Override
-            public void accept(RxBus.Event<String> event) throws Exception {
-                Log.i("Main", "accept(MainActivity.java:147) data: " + event.getData() + ",event:" + event.getEventName());
+            public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
+                mEmitter = emitter;
             }
-        });
+        })
+                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+                        Log.i(TAG, "retryWhen ==> apply(TestRxjavaActivity.java:63): ");
+                        return  throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+                            @Override
+                            public ObservableSource<?> apply(Throwable throwable) throws Exception {
+                                boolean flag = false;
+                                if (throwable instanceof ClassCastException){
+                                    flag = true;
+                                }
+                                return flag ? Observable.just(1) : Observable.error(throwable);
+                            }
+                        });
+                    }
+                })
+                .subscribe(integer -> Log.d(TAG,integer.toString()),throwable -> Log.w(TAG, "init(TestRxjavaActivity.java:67): ", throwable));
 
-
-        RxBus.getInstance().doSubscribe(this, EVENT_NAME_INT, new Consumer<RxBus.Event<Integer>>() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void accept(RxBus.Event<Integer> event) throws Exception {
-                Log.i(TAG, "accept(MainActivity.java:147) data: "+event.getData()+",event:"+event.getEventName());
+            public void run() {
+                Log.i(TAG, "run onError ");
+                mEmitter.onError(new ClassCastException("TEST ERROR"));
             }
-        });
-
-        RxBus.getInstance().doSubscribe(this, EVENT_NAME_ANOTHER, new Consumer<RxBus.Event<String>>() {
+        }, 1000);
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void accept(RxBus.Event<String> event) throws Exception {
-                Log.i(TAG, "accept(MainActivity.java:147) data: "+event.getData()+",event:"+event.getEventName());
+            public void run() {
+                Log.i(TAG, "run onNext ");
+                mEmitter.onError(new ClassCastException("TEST ERROR onNext"));
+                mEmitter.onNext("Test onNext");
             }
-        });
+        }, 2000);
+//        mEvent = new RxBus.Event<>();
+//        mEvent.setEventName(EVENT_NAME);
+//        mEvent.setData("test data");
+//
+//        mEventString = new RxBus.Event<>();
+//        mEventString.setEventName(EVENT_NAME_ANOTHER);
+//        mEventString.setData("another test data");
+//
+//        mEventInt = new RxBus.Event<>();
+//        mEventInt.setEventName(EVENT_NAME_INT);
+//        mEventInt.setData(100);
+
+//        RxBus.getInstance().doSubscribe(this, EVENT_NAME, new Consumer<RxBus.Event<String>>() {
+//            @Override
+//            public void accept(RxBus.Event<String> event) throws Exception {
+//                Log.i("Main", "accept(MainActivity.java:147) data: " + event.getData() + ",event:" + event.getEventName());
+//            }
+//        });
+//
+//
+//        RxBus.getInstance().doSubscribe(this, EVENT_NAME_INT, new Consumer<RxBus.Event<Integer>>() {
+//            @Override
+//            public void accept(RxBus.Event<Integer> event) throws Exception {
+//                Log.i(TAG, "accept(MainActivity.java:147) data: "+event.getData()+",event:"+event.getEventName());
+//            }
+//        });
+//
+//        RxBus.getInstance().doSubscribe(this, EVENT_NAME_ANOTHER, new Consumer<RxBus.Event<String>>() {
+//            @Override
+//            public void accept(RxBus.Event<String> event) throws Exception {
+//                Log.i(TAG, "accept(MainActivity.java:147) data: "+event.getData()+",event:"+event.getEventName());
+//            }
+//        });
 
 
 //        List<String> strings = new ArrayList<>();

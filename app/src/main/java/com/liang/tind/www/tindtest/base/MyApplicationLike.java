@@ -9,6 +9,11 @@ import android.util.Log;
 
 import com.liang.tind.www.tindtest.util.CrashHandler;
 import com.maxwell.imkid.library.app.MaxWellApplication;
+import com.squareup.leakcanary.AndroidExcludedRefs;
+import com.squareup.leakcanary.DisplayLeakService;
+import com.squareup.leakcanary.ExcludedRefs;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -87,5 +92,15 @@ public class MyApplicationLike extends DefaultApplicationLike {
         Log.i(TAG, "Device System RELEASE: "+Build.VERSION.RELEASE);
         Log.i(TAG, "Device System SDK_INT: "+Build.VERSION.SDK_INT);
     }
+
+    private void initLeakCanary(){
+        ExcludedRefs.Builder appDefaults = AndroidExcludedRefs.createAppDefaults();
+        appDefaults.thread("test thread");
+
+        RefWatcher refWatcher = LeakCanary.refWatcher(getApplication()).listenerServiceClass(DisplayLeakService.class)
+                .excludedRefs(appDefaults.build())
+                .buildAndInstall();
+    }
+
 
 }

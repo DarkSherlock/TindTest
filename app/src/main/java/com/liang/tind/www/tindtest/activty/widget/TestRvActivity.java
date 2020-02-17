@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -34,7 +35,7 @@ public class TestRvActivity extends BaseActivity {
 
     List<String> mList = new ArrayList<>();
 
-    public static final int DEFAULT_COUNT = 20;
+    public static final int DEFAULT_COUNT = 50;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_test_recycler_view;
@@ -158,7 +159,20 @@ public class TestRvActivity extends BaseActivity {
         public ViewHolder(@NonNull ViewGroup itemView) {
             super(itemView);
             Context context = itemView.getContext();
-            mTextView = new TextView(context);
+            mTextView = new AppCompatTextView(context){
+                private Object tag = "sss";
+                @Override
+                protected void onAttachedToWindow() {
+                    super.onAttachedToWindow();
+                    Log.i("Tind", "onAttachedToWindow(ViewHolder.java:166): "+getContext()+"tag="+tag);
+                }
+
+                @Override
+                protected void onDetachedFromWindow() {
+                    super.onDetachedFromWindow();
+                    Log.i("Tind", "onDetachedFromWindow(ViewHolder.java:165): ==>");
+                }
+            };
             mTextView.setBackgroundColor(Color.parseColor("#ffff8800"));
             LinearLayout.LayoutParams wrapParams = new LinearLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
                     FrameLayout.LayoutParams.WRAP_CONTENT);
