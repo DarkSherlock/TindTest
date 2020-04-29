@@ -21,8 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * desc
@@ -30,7 +28,6 @@ import butterknife.ButterKnife;
  * date 2019/7/26
  */
 public class TestRvActivity extends BaseActivity {
-    @BindView(R.id.rv)
     RecyclerView mRv;
 
     List<String> mList = new ArrayList<>();
@@ -44,8 +41,7 @@ public class TestRvActivity extends BaseActivity {
     int remove;
     @Override
     protected void init() {
-        ButterKnife.bind(this);
-
+        mRv = findViewById(R.id.rv);
         for (int i = 0; i < DEFAULT_COUNT; i++) {
             mList.add("Test Data "+i);
         }
@@ -128,6 +124,12 @@ public class TestRvActivity extends BaseActivity {
         }
 
         @Override
+        public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
+            super.onViewDetachedFromWindow(holder);
+            Log.i(TAG, "onViewDetachedFromWindow(): "+holder);
+        }
+
+        @Override
         public int getItemCount() {
             return mList.size();
         }
@@ -164,13 +166,13 @@ public class TestRvActivity extends BaseActivity {
                 @Override
                 protected void onAttachedToWindow() {
                     super.onAttachedToWindow();
-                    Log.i("Tind", "onAttachedToWindow(ViewHolder.java:166): "+getContext()+"tag="+tag);
+                    Log.i("AdapterViewHolder", "onAttachedToWindow(ViewHolder.java:166): "+getContext()+"tag="+tag);
                 }
 
                 @Override
                 protected void onDetachedFromWindow() {
                     super.onDetachedFromWindow();
-                    Log.i("Tind", "onDetachedFromWindow(ViewHolder.java:165): ==>");
+                    Log.i("AdapterViewHolder", "onDetachedFromWindow(ViewHolder.java:165): ==>"+this);
                 }
             };
             mTextView.setBackgroundColor(Color.parseColor("#ffff8800"));

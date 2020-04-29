@@ -1,9 +1,11 @@
 package com.liang.tind.www.tindtest.activty.widget;
 
+import android.app.Dialog;
 import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
 import android.view.ViewTreeObserver;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.liang.tind.www.tindtest.R;
@@ -31,6 +33,9 @@ public class TestWidgetActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        EditText editText = findViewById(R.id.edit_text);
+        editText.setMaxLines(5);
+
         TextView textView = findViewById(R.id.text);
         new Handler().post(new Runnable() {
             @Override
@@ -89,6 +94,8 @@ public class TestWidgetActivity extends BaseActivity {
         textView.setText(Html.fromHtml(test));
 
         Log.i(TAG, "init(TestWidgetActivity.java:91): ");
+
+        Dialog dialog = new Dialog(this);
     }
 
 

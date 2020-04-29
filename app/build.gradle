@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 apply from: 'and_res_guard.gradle'
 apply from: 'tinker-support.gradle'
-//apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 //apply plugin: "androidx.navigation.safeargs"
 
 def bakPath() {
     return file("${buildDir}/bakApk/")
 }
+
 println('** build versionName=' + System.properties['Tind'])
 /**
  * 此处填写每次构建生成的基准包目录
@@ -39,7 +40,7 @@ android {
         multiDexEnabled true
 
         ndk {
-            abiFilters 'armeabi-v7a','x86'
+            abiFilters 'armeabi-v7a', 'x86'
         }
     }
 
@@ -61,7 +62,7 @@ android {
             assets.srcDirs = ['assets']
         }
     }
-    
+
     repositories {
         flatDir {
             dirs 'libs'
@@ -150,5 +151,11 @@ dependencies {
     implementation files('libs/facetracking.jar')
     implementation rootProject.ext.androidXLibs
     implementation rootProject.ext.dependenciesLibs
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    debugApi 'com.squareup.leakcanary:leakcanary-android:2.2'
+    api 'com.squareup.leakcanary:leakcanary-object-watcher-android:2.2'
     annotationProcessor rootProject.ext.annotationProcessorLibs
+    kapt rootProject.ext.kaptLibs
 }

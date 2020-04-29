@@ -17,8 +17,10 @@
     <dimen name="sports_kit_45dip">45dp</dimen>
     <dimen name="sports_kit_50dip">50dp</dimen>
     <dimen name="sports_kit_56dip">56dp</dimen>
+    <dimen name="controller_banner_text_size">20sp</dimen>
 
     <dimen name="fontsize5">14dp</dimen>
     <dimen name="fontsize6">12dp</dimen>
     <dimen name="fontsize8">10dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

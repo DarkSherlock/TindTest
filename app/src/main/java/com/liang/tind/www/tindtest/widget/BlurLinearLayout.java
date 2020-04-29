@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -17,7 +18,7 @@ import androidx.annotation.Nullable;
  * desc
  */
 public class BlurLinearLayout extends LinearLayout {
-
+    private static final String TAG = "BlurLinearLayout";
     private Paint mPaint;
     private BlurMaskFilter mMaskfilter;
 
@@ -58,5 +59,17 @@ public class BlurLinearLayout extends LinearLayout {
         //关闭硬件加速
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         canvas.drawRect(20, 20, getRight() - 20, getBottom() - 20, mPaint);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Log.i(TAG, "onAttachedToWindow(): ");
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Log.i(TAG, "onDetachedFromWindow(): ");
     }
 }

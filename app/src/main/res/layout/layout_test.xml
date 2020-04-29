@@ -50,9 +50,34 @@
     </com.liang.tind.www.tindtest.widget.BlurLinearLayout>
 
     <TextView
+        android:id="@+id/text2"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_red_light"
         android:layout_below="@+id/text"
         android:text="text1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/text2"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:gravity="top"
+            android:hint="input"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:inputType="textNoSuggestions|textMultiLine"
+            android:maxLines="5"
+            android:padding="12dp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

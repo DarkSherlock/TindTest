@@ -13,11 +13,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--  给service 设置自定义权限 signature 模式 要求服务端和客户端都用同个签名文件 才允许被访问  -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 给service 设置自定义权限 signature 模式 要求服务端和客户端都用同个签名文件 才允许被访问 -->
     <permission
         android:name="com.tind.liang.permission.ACCESS_SERVER"
         android:protectionLevel="signature" />
+
     <application
         android:name=".base.TindApplication"
         android:allowBackup="true"
@@ -29,7 +29,9 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".activty.EmptyActivity" />
-        <activity android:name=".activty.MainActivity">
+        <activity
+            android:name=".activty.MainActivity"
+            android:theme="@style/AppThemeActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,7 +62,14 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activty.widget.TestMotionLayoutActivity" />
         <activity android:name=".activty.widget.TestTabLayout" />
-        <activity android:name=".activty.widget.TestSwitchActivity" /> <!-- <activity android:name=".activty.TestLineChartActivity"/> -->
+        <activity android:name=".activty.widget.TestSwitchActivity" />
+        <activity android:name=".activty.kotlin.KotlinActivity" />
+        <activity
+            android:name=".activty.widget.TestDialogActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".activty.widget.TestRatingBarActivity" />
+        <activity android:name=".activty.room.RoomActivity" />
+        <activity android:name=".activty.kotlin.CoroutineActivity" /> <!-- <activity android:name=".activty.TestLineChartActivity"/> -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -70,11 +79,13 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <service
             android:name=".service.RemoteService"
             android:permission="com.tind.liang.permission.ACCESS_SERVER">
             <intent-filter>
                 <action android:name="com.tind.liang.test.server.action" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>

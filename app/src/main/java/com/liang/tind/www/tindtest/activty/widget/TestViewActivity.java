@@ -30,6 +30,8 @@ public class TestViewActivity extends MainActivity {
         addItem(TestSoftInputActivity.class);
         addItem(TestMotionLayoutActivity.class);
         addItem(TestSwitchActivity.class);
+        addItem(TestDialogActivity.class);
+        addItem(TestRatingBarActivity.class);
     }
 
     @Override
