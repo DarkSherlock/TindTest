@@ -20,7 +20,7 @@ public class RemoteService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return mStub;
+        return mStub.asBinder();
     }
 
     IMyAidlInterface.Stub mStub = new IMyAidlInterface.Stub() {

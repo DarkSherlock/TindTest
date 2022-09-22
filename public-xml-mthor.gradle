@@ -1,0 +1,173 @@
+// This plugin is used to fix the resource id of resources.
+// Will fix three types of resources:
+// - color with "color" prefix
+// - string with "dynamic" prefix
+// - drawable with "dynamic" prefix
+
+// The process of this plugin:
+//
+//    public_ids.txt
+//    ↓                   ↖
+//    ↓                              ↖
+//    Task{prepareStableIdConfig}                ↖
+//    ↓                                            Task{updatePublicIdConfig}
+//    ${buildDir}/outputs/stable_public.txt                  ↖
+//    ↓                                                         ↖
+//    build APK    → → → → → → → → → → → → →   ${buildDir}/outputs/emit_public.txt
+//
+//
+
+ext {
+    publicIds = [
+            'packageName' : "packageName",
+            'publicIdsFile' : "public_ids.txt"
+    ]
+}
+
+android{
+    aaptOptions {
+        noCompress "dynamic_res.zip"
+    }
+}
+
+static def writeIds(File file, List<String> ids) {
+    if (!file.parentFile.exists()) {
+        file.parentFile.mkdirs()
+    }
+    def printWriter = file.newPrintWriter()
+    ids.forEach {
+        printWriter.write(it)
+        printWriter.write('\n')
+    }
+    printWriter.flush()
+    printWriter.close()
+}
+
+static def isStableColorId(String line) {
+    return line.contains("color/color")
+}
+
+static def isStableStringId(String line) {
+    return line.contains("string/dynamic")
+}
+
+static def isStableDrawableId(String line) {
+    return line.contains("drawable/dynamic")
+}
+
+static def isStableId(String line) {
+    return isStableColorId(line) || isStableStringId(line) || isStableDrawableId(line)
+}
+
+static def getId(String line) {
+    return Integer.parseInt(line.substring(line.indexOf("0x") + 2), 16)
+}
+
+static def getNewIdString(String line, int newId) {
+    return line.substring(0, line.indexOf("=") + 2) + "0x" + Integer.toString(newId, 16)
+}
+
+def updateAaptOption(String applicationId, String taskName) {
+    println "taskName:$taskName"
+    println "prepare stable public ids for " + applicationId
+
+    def stablePublicFile = "${buildDir}/outputs/${applicationId}_stable_public.txt"
+    File configPublicIdsFile = project.rootProject.file(publicIds.publicIdsFile)
+    if (configPublicIdsFile.exists()) {
+        Set<String> newIds = new HashSet<>()
+        configPublicIdsFile.eachLine("UTF-8") {
+            if (isStableId(it)) {
+                newIds.add(it.replace(publicIds.packageName, applicationId))
+            }
+        }
+        writeIds(new File(stablePublicFile), newIds.toSorted())
+
+        android.aaptOptions.additionalParameters("--stable-ids", stablePublicFile)
+    }
+
+    def emitPublicFile = "${buildDir}/outputs/${applicationId}_emit_public.txt"
+    android.aaptOptions.additionalParameters("--emit-ids", emitPublicFile)
+}
+
+def updatePublicFile(String applicationId, String taskName) {
+    println "taskName=$taskName"
+    println "update public ids config"
+    def emitPublicFile = "${buildDir}/outputs/${applicationId}_emit_public.txt"
+    File publicBuildFile = new File(emitPublicFile)
+    File publicTxtFile = project.rootProject.file(publicIds.publicIdsFile)
+
+    Map<String, String> oldIdMaps = new HashMap<String, String>()
+    int lastStableColorId = 0x7f060000
+    int lastStableStringId = 0x7f110000
+    int lastStableDrawableId = 0x7f080000
+    if (publicTxtFile.exists()) {
+        publicTxtFile.eachLine("UTF-8") {
+            if (isStableColorId(it)) {
+                lastStableColorId = Math.max(lastStableColorId, getId(it))
+            }
+            if (isStableStringId(it)) {
+                lastStableStringId = Math.max(lastStableStringId, getId(it))
+            }
+            if (isStableDrawableId(it)) {
+                lastStableDrawableId = Math.max(lastStableDrawableId, getId(it))
+            }
+            def splits = it.split("=")
+            oldIdMaps.put(splits[0].trim(), splits[1].trim())
+        }
+    }
+
+    boolean hasChangedId = false
+    Set<String> buildIds = new HashSet<>()
+    if (publicBuildFile.exists()) {
+        publicBuildFile.eachLine("UTF-8") {
+            String newId =  publicIds.packageName  + it.substring(it.indexOf(":") )
+            def splits = newId.split("=")
+            def key = splits[0].trim()
+            def value = splits[1].trim()
+            if (oldIdMaps.containsKey(key)) {
+                if (value != oldIdMaps.get(key)) {
+                    hasChangedId = true
+                    println("$key is changed: old is ${oldIdMaps.get(key)}, new is $value")
+                }
+            } else {
+                if (isStableColorId(newId)) {
+                    println("add color " + newId)
+                    hasChangedId = true
+                    lastStableColorId ++
+                    buildIds.add(getNewIdString(newId, lastStableColorId))
+                } else if (isStableStringId(newId)) {
+                    println("add String " + newId)
+                    hasChangedId = true
+                    lastStableStringId ++
+                    buildIds.add(getNewIdString(newId, lastStableStringId))
+                } else if (isStableDrawableId(newId)) {
+                    println("add Drawable " + newId)
+                    hasChangedId = true
+                    lastStableDrawableId ++
+                    buildIds.add(getNewIdString(newId, lastStableDrawableId))
+                }
+            }
+        }
+    }
+
+    if (hasChangedId) {
+        oldIdMaps.forEach { key, value ->
+            buildIds.add(key + " = " + value)
+        }
+        writeIds(publicTxtFile, buildIds.toSorted())
+        throw new RuntimeException("new stable id detected, added to public_ids.txt, please Clean & Build again. " +
+                "(If it is running in jenkins, please use Android Stuido build it, then submit the public_ids.txt file)")
+    }
+}
+
+android.applicationVariants.all { def variant ->
+    def assembleTask = tasks.findByName("assemble${variant.name.capitalize()}")
+    assembleTask.doLast {
+        updatePublicFile(variant.applicationId, assembleTask.name)
+    }
+
+    def preBuildTask = tasks.findByName("pre${variant.name.capitalize()}Build")
+    preBuildTask.doFirst {
+        updateAaptOption(variant.applicationId, preBuildTask.name)
+    }
+}

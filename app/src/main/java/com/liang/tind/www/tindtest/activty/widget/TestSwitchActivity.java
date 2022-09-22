@@ -1,6 +1,7 @@
 package com.liang.tind.www.tindtest.activty.widget;
 
 import android.content.res.ColorStateList;
+import android.widget.CompoundButton;
 
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
@@ -13,7 +14,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
  * @date 2019/11/06 14:25
  * desc
  */
-public class TestSwitchActivity extends BaseActivity {
+public class TestSwitchActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
     private androidx.appcompat.widget.SwitchCompat mSwitchTest;
 
     @Override
@@ -29,8 +30,9 @@ public class TestSwitchActivity extends BaseActivity {
     private void initView() {
         mSwitchTest = findViewById(R.id.switch_test);
 
-//        SwitchCompat switchCompat = findViewById(R.id.switch_anonymous_question);
-//        setSwitchColor(switchCompat);
+        SwitchCompat switchCompat = findViewById(R.id.switch_test);
+        switchCompat.setOnCheckedChangeListener(this);
+        setSwitchColor(switchCompat);
     }
 
     public static void setSwitchColor(SwitchCompat v) {
@@ -63,6 +65,11 @@ public class TestSwitchActivity extends BaseActivity {
                         trackColor
                 }));
 
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
     }
 }

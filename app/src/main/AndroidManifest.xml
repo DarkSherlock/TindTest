@@ -13,7 +13,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 给service 设置自定义权限 signature 模式 要求服务端和客户端都用同个签名文件 才允许被访问 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 给service 设置自定义权限 signature 模式 要求服务端和客户端都用同个签名文件 才允许被访问 -->
     <permission
         android:name="com.tind.liang.permission.ACCESS_SERVER"
         android:protectionLevel="signature" />
@@ -23,12 +25,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".activty.EmptyActivity" />
+        <activity android:name=".activty.GenericsActivity" />
         <activity
             android:name=".activty.MainActivity"
             android:theme="@style/AppThemeActionBar">
@@ -40,7 +43,6 @@
         </activity>
         <activity android:name=".activty.TestSocketActivity" />
         <activity android:name=".activty.TestChromiumActivity" />
-        <activity android:name=".activty.TestHRFace" />
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
@@ -49,7 +51,7 @@
         <activity android:name=".activty.TestRxjavaActivity" />
         <activity android:name=".activty.TestRotateImageViewActivity" />
         <activity android:name=".activty.TestTalkBackActivity" />
-        <activity android:name=".activty.TestRbtnActivity" />
+        <activity android:name=".activty.TestEditTextActivity" />
         <activity android:name=".activty.TestRecyclerViewActivity" />
         <activity android:name=".activty.TestBarChartActivity" />
         <activity android:name=".activty.TestLineChartActivity" />
@@ -57,6 +59,9 @@
         <activity android:name=".activty.widget.TestOnTouchEventActivity" />
         <activity android:name=".activty.widget.TestViewActivity" />
         <activity android:name=".activty.widget.TestRvActivity" />
+        <activity
+            android:name="com.liang.tind.www.tindtest.activty.widget.TestCustomViewActivity"
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".activty.widget.TestSoftInputActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -66,10 +71,21 @@
         <activity android:name=".activty.kotlin.KotlinActivity" />
         <activity
             android:name=".activty.widget.TestDialogActivity"
-            android:screenOrientation="landscape" />
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/DialogTheme" />
         <activity android:name=".activty.widget.TestRatingBarActivity" />
         <activity android:name=".activty.room.RoomActivity" />
-        <activity android:name=".activty.kotlin.CoroutineActivity" /> <!-- <activity android:name=".activty.TestLineChartActivity"/> -->
+        <activity android:name=".activty.kotlin.CoroutineActivity" />
+        <activity android:name=".activty.dump.DumpActivity" />
+        <activity android:name=".activty.BtnActivity" />
+        <activity
+            android:name=".activty.SingleTaskActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activty.widget.TestNinePatch" />
+        <activity android:name=".activty.widget.LevelListDrawableActivity" />
+        <activity android:name=".activty.widget.TestHtmlActivity" />
+        <activity android:name=".activty.widget.SnackBarActivity" /> <!-- <activity android:name=".activty.TestLineChartActivity"/> -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -89,6 +105,30 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+
+
+        <receiver
+            android:name=".update.AdminReceiver"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+        </receiver>
+
+<!--        <receiver-->
+<!--            android:name=".receiver.TestReceiver"-->
+<!--            android:exported="true"-->
+<!--            >-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.tind.liang.ACTION_TEST" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
+
     </application>
 
 </manifest>

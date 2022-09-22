@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import com.liang.tind.www.tindtest.util.CrashHandler;
@@ -18,8 +17,8 @@ import com.tencent.tinker.loader.BuildConfig;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
 
 import androidx.multidex.MultiDex;
-import leakcanary.AppWatcher;
-import leakcanary.LeakCanary;
+//import leakcanary.AppWatcher;
+//import leakcanary.LeakCanary;
 
 public class MyApplicationLike extends DefaultApplicationLike {
   private static final String TAG = "MyApplicationLike";
@@ -61,13 +60,13 @@ public class MyApplicationLike extends DefaultApplicationLike {
   }
 
   private void initLeakCanary() {
-    Looper.myQueue().addIdleHandler(() -> {
-      AppWatcher.Config leakConfig = new AppWatcher.Config(true, true, true, false, false, 5000);
-      AppWatcher.setConfig(leakConfig);
-      LeakCanary.Config config = LeakCanary.getConfig().newBuilder().dumpHeap(true).build();
-      LeakCanary.setConfig(config);
-      return false;
-    });
+//    Looper.myQueue().addIdleHandler(() -> {
+//      AppWatcher.Config leakConfig = new AppWatcher.Config(true, true, true, false, false, 5000);
+//      AppWatcher.setConfig(leakConfig);
+//      LeakCanary.Config config = LeakCanary.getConfig().newBuilder().dumpHeap(true).build();
+//      LeakCanary.setConfig(config);
+//      return false;
+//    });
   }
 
   //    private void initImageLoader() {

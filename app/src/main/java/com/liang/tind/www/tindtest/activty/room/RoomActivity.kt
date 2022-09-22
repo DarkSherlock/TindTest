@@ -1,18 +1,15 @@
 package com.liang.tind.www.tindtest.activty.room
 
-import android.text.format.DateUtils
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.liang.tind.www.tindtest.R
 import com.liang.tind.www.tindtest.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_room.*
-import kotlinx.coroutines.*
-import java.io.File
-import java.lang.Exception
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  *@author lonnie.liang
@@ -22,7 +19,7 @@ import java.util.*
 class RoomActivity : BaseActivity() {
     private var id = 1L
     override fun init() {
-        val userDao = UserRoomDatabase.getInstance(this).userDao()
+        val userDao = TindRoomDatabase.getInstance(this).userDao()
         insert.setOnClickListener {
             val user = Model("Name$id")
             Log.i(TAG, "insert=$user")

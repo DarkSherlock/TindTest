@@ -3,7 +3,6 @@ package com.liang.tind.www.tindtest.widget;
 import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -42,7 +41,7 @@ public class BlurLinearLayout extends LinearLayout {
         mPaint.setStyle(Paint.Style.FILL);
 //        mPaint.setStrokeWidth(1);
 
-        mPaint.setColor(Color.RED);
+//        mPaint.setColor(Color.RED);
         setWillNotDraw(false);
     }
 

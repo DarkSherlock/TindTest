@@ -1,22 +1,15 @@
 package com.liang.tind.www.tindtest.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.liang.tind.www.tindtest.activty.MainActivity;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleEventObserver;
-import androidx.lifecycle.LifecycleOwner;
 
 /**
  * desc
@@ -26,19 +19,12 @@ import androidx.lifecycle.LifecycleOwner;
 public class FirstFragment extends Fragment {
     private static final String TAG = "FirstFragment";
 
+
     public static FirstFragment newInstance() {
         FirstFragment fragment = new FirstFragment();
         return fragment;
     }
 
-    private void test() {
-        getLifecycle().addObserver(new LifecycleEventObserver() {
-            @Override
-            public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
-                Lifecycle.State currentState = source.getLifecycle().getCurrentState();
-            }
-        });
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -60,6 +46,12 @@ public class FirstFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "onViewCreated()");
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.i(TAG, "onActivityCreated(FirstFragment.java:55): ");
@@ -75,15 +67,6 @@ public class FirstFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume(FirstFragment.java:67): ");
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                getActivity().startActivity(intent);
-                getActivity().finish();
-            }
-        }, 500);
     }
 
     @Override
@@ -114,5 +97,11 @@ public class FirstFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         Log.i(TAG, "onDetach(FirstFragment.java:97): ");
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSaveInstanceState(): ");
     }
 }

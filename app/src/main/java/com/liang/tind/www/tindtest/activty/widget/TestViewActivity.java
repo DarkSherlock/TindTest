@@ -5,7 +5,7 @@ import android.util.Log;
 import com.liang.tind.www.tindtest.activty.MainActivity;
 import com.liang.tind.www.tindtest.activty.TestBarChartActivity;
 import com.liang.tind.www.tindtest.activty.TestLineChartActivity;
-import com.liang.tind.www.tindtest.activty.TestRbtnActivity;
+import com.liang.tind.www.tindtest.activty.TestEditTextActivity;
 import com.liang.tind.www.tindtest.activty.TestRecyclerViewActivity;
 import com.liang.tind.www.tindtest.activty.TestRotateImageViewActivity;
 
@@ -24,7 +24,7 @@ public class TestViewActivity extends MainActivity {
         addItem(TestLineChartActivity.class);
         addItem(TestBarChartActivity.class);
         addItem(TestWidgetActivity.class);
-        addItem(TestRbtnActivity.class);
+        addItem(TestEditTextActivity.class);
         addItem(TestRotateImageViewActivity.class);
         addItem(TestRvActivity.class);
         addItem(TestSoftInputActivity.class);
@@ -32,6 +32,11 @@ public class TestViewActivity extends MainActivity {
         addItem(TestSwitchActivity.class);
         addItem(TestDialogActivity.class);
         addItem(TestRatingBarActivity.class);
+        addItem(TestCustomViewActivity.class);
+        addItem(TestNinePatch.class);
+        addItem(LevelListDrawableActivity.class);
+        addItem(TestHtmlActivity.class);
+        addItem(SnackBarActivity.class);
     }
 
     @Override

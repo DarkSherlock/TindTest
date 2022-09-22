@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
-apply from: 'and_res_guard.gradle'
-apply from: 'tinker-support.gradle'
+//apply from: 'and_res_guard.gradle'
+//apply from: 'tinker-support.gradle'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 //apply plugin: "androidx.navigation.safeargs"
 
+
 def bakPath() {
     return file("${buildDir}/bakApk/")
 }
 
-println('** build versionName=' + System.properties['Tind'])
 /**
  * 此处填写每次构建生成的基准包目录
  */
@@ -48,11 +48,27 @@ android {
         jumboMode = true
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('../test.keystore')
+            storePassword '23259895'
+            keyAlias 'testKey'
+            keyPassword '23259895'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable true
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -73,6 +89,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 
     /**
      * bak apk and mapping
@@ -148,14 +165,22 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('libs/facetracking.jar')
+
+    implementation project(":common")
     implementation rootProject.ext.androidXLibs
     implementation rootProject.ext.dependenciesLibs
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
 
     debugApi 'com.squareup.leakcanary:leakcanary-android:2.2'
     api 'com.squareup.leakcanary:leakcanary-object-watcher-android:2.2'
     annotationProcessor rootProject.ext.annotationProcessorLibs
     kapt rootProject.ext.kaptLibs
+//    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+//    debugImplementation 'com.didichuxing.doraemonkit:dokitx:3.3.5'
+//    releaseImplementation 'com.didichuxing.doraemonkit:dokitx-no-op:3.3.5'
 }
+
+//apply from: '../public-xml-mthor.gradle'

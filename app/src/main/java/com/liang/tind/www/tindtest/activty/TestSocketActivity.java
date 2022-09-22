@@ -62,7 +62,7 @@ public class TestSocketActivity extends BaseActivity implements SocketClient.Soc
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_connect:
-                mSocketClient .connectToServer(MainActivity.SOCKET_SERVER_URL);
+                mSocketClient.connectToServer(MainActivity.SOCKET_SERVER_URL);
                 break;
             case R.id.btn_close:
                 mSocketClient.close();
@@ -73,14 +73,13 @@ public class TestSocketActivity extends BaseActivity implements SocketClient.Soc
                 socketModel.setReceiver(SocketModel.RECEIVER_SERVER);
                 socketModel.setEvent("notice");
                 socketModel.setData(mEtSend.getText().toString().trim());
-                mSocketClient.sendSocketMessage(socketModel );
+                mSocketClient.sendSocketMessage(socketModel);
                 break;
 
             default:
                 break;
         }
     }
-
 
 
     @Override
@@ -96,13 +95,13 @@ public class TestSocketActivity extends BaseActivity implements SocketClient.Soc
             @Override
             public void onSubscribe(Subscription s) {
                 mSubscription = s;
-                RxBusFlowable.getInstance().addSubscription(TestSocketActivity.this,s);
+                RxBusFlowable.getInstance().addSubscription(TestSocketActivity.this, s);
                 s.request(1);
             }
 
             @Override
             public void onNext(Integer integer) {
-                Log.e("Tind", "onNext: "+integer);
+                Log.e("Tind", "onNext: " + integer);
                 mSubscription.request(1);
             }
 
@@ -139,17 +138,17 @@ public class TestSocketActivity extends BaseActivity implements SocketClient.Soc
 
     @Override
     public void onOpen(SocketOpenBean socketOpenBean) {
-        Log.e(TAG, "onOpen: "+socketOpenBean);
+        Log.e(TAG, "onOpen: " + socketOpenBean);
     }
 
     @Override
     public void onClose(SocketCloseBean socketCloseBean) {
-        Log.e(TAG, "onClose: "+socketCloseBean.toString());
+        Log.e(TAG, "onClose: " + socketCloseBean.toString());
     }
 
     @Override
     public void onMessage(SocketModel socketModel) {
-        Log.e(TAG, "onMessage: "+socketModel.toString());
+        Log.e(TAG, "onMessage: " + socketModel.toString());
     }
 
     @Override

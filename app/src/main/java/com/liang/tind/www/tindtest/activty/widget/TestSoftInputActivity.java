@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.liang.tind.www.tindtest.R;
@@ -33,7 +34,7 @@ public class TestSoftInputActivity  extends BaseActivity {
     protected void init() {
         SoftInputFragment fragment = SoftInputFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container,fragment).commit();
+        fragmentTransaction.replace(R.id.scrollView,fragment).commit();
     }
 
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -68,7 +69,14 @@ public class TestSoftInputActivity  extends BaseActivity {
             View view = inflater.inflate(R.layout.fragment_soft_inpt,container,false);
             return view;
         }
-    }
+
+      @Override
+      public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+          super.onViewCreated(view, savedInstanceState);
+          Button close = view.findViewById(R.id.btn_close);
+          close.setOnClickListener(v -> requireActivity().finish());
+      }
+  }
 
     private boolean isShouldHideInput(View v, MotionEvent event) {
         if (v != null && (v instanceof EditText)) {
