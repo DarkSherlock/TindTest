@@ -1,0 +1,5 @@
+packageName:color/color3 = 0x7f060001
+packageName:color/color7 = 0x7f060005
+packageName:color/colorAccent = 0x7f060004
+packageName:color/colorPrimary = 0x7f060003
+packageName:color/colorPrimaryDark = 0x7f060002

@@ -6,7 +6,7 @@ buildscript {
     repositories {
         maven {
             name 'aliyun'
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            url 'https://maven.aliyun.com/nexus/content/groups/public/'
         }
         maven { url "https://jitpack.io" }
         mavenCentral()
@@ -21,7 +21,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:7.3.1'
         classpath "com.tencent.bugly:tinker-support:1.1.5"
         classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.10'
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.8'
@@ -36,7 +36,7 @@ allprojects {
     repositories {
         maven {
             name 'aliyun'
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            url 'https://maven.aliyun.com/nexus/content/groups/public/'
         }
         maven { url "https://jitpack.io" }
         mavenCentral()

@@ -39,7 +39,7 @@ class TestRecyclerViewActivity : BaseActivity(), CoroutineScope by MainScope() {
 
         mRvBirthdayUsers!!.adapter = RvAdapter(list, this)
 //        mRvBirthdayUsers?.itemAnimator = RecyclerView.ItemAnimator()
-        mRvBirthdayUsers?.addItemDecoration(LinearItemDecoration(10,20))
+        mRvBirthdayUsers?.addItemDecoration(LinearItemDecoration(10, 20))
     }
 
 
@@ -63,12 +63,25 @@ class TestRecyclerViewActivity : BaseActivity(), CoroutineScope by MainScope() {
 
         internal class ViewHolder(itemView: View, adapter: RvAdapter) :
             RecyclerView.ViewHolder(itemView) {
+            private val testA: String = ""
+            private var flagA = true
+
             init {
                 (itemView as? CustomView)?.setOnClickListener {
 //                    itemView.test()
                     adapter.notifyItemChanged(layoutPosition)
                 }
             }
+
+            constructor(params1: String, itemView: View, adapter: RvAdapter) : this(
+                itemView,
+                adapter
+            ) {
+                Log.i("TAG", "params1: $params1")
+            }
+
+            private val testB: String = ""
+            private var flagB = true
         }
     }
 

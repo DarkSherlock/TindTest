@@ -29,7 +29,6 @@ def appName() {
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
     defaultConfig {
         applicationId "com.liang.tind.www.tindtest"
         minSdkVersion rootProject.ext.android.minSdkVersion
