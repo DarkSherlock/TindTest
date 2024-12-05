@@ -8,6 +8,7 @@ import com.liang.tind.www.tindtest.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_coroutine.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.coroutineContext
+import kotlin.coroutines.suspendCoroutine
 
 /**
  *@author lonnie.liang
@@ -137,11 +138,12 @@ class CoroutineActivity : BaseActivity() {
     }
 
     private suspend fun testCancel() {
-        withContext(Dispatchers.IO) {
+        val result = withContext(Dispatchers.IO) {
             delay(3000)
             Log.i(TAG, "testCancel: ")
             "result"
         }
+        println("result="+result)
     }
 
     private suspend fun testThrowException() {
@@ -156,6 +158,7 @@ class CoroutineActivity : BaseActivity() {
                 throw IllegalAccessException("simulate crash")
             }
         }
+
 
         val errorHandler1 = CoroutineExceptionHandler { coroutineContext, throwable ->
             Log.e(TAG, "errorHandler1: coroutineContext=${coroutineContext[Job]}", throwable)

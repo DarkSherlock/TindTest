@@ -3,22 +3,22 @@ package com.liang.tind.www.tindtest.activty;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.base.BaseActivity;
 import com.liang.tind.www.tindtest.util.RxBus;
-
-import org.reactivestreams.Subscription;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.reactivestreams.Subscription;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.exceptions.CompositeException;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
@@ -50,7 +50,7 @@ public class TestRxjavaActivity extends BaseActivity {
 
     @Override
     protected void init() {
-
+        testConcatDelayError();
         Observable.create(new ObservableOnSubscribe<Object>() {
             @Override
             public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
@@ -245,6 +245,60 @@ public class TestRxjavaActivity extends BaseActivity {
         RxBus.getInstance().post(mEvent);
         RxBus.getInstance().post(mEventString);
         RxBus.getInstance().post(mEventInt);
+    }
+
+
+    public void testConcatDelayError(){
+        List<Observable<Integer>> list = new ArrayList<>();
+        list.add(Observable.just(1).doOnNext(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                throw new NullPointerException();
+            }
+        }));
+//        list.add(Observable.just(2));
+//        list.add(Observable.just(3).doOnNext(new Consumer<Integer>() {
+//            @Override
+//            public void accept(Integer integer) throws Exception {
+//                throw new MyException("s");
+//            }
+//        }));
+//        list.add(Observable.just(4));
+        Observable.concatDelayError(list).subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                Log.i(TAG, "onNext:"+integer);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (e instanceof CompositeException) {
+                    CompositeException errors = (CompositeException) e;
+                    List<Throwable> exceptions = errors.getExceptions();
+                    for (Throwable error : exceptions) {
+                        Log.e(TAG, "each error:", error);
+                    }
+                } else {
+                    Log.e(TAG, "onError", e);
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                Log.i(TAG, "onComplete");
+            }
+        });
+    }
+
+    class MyException extends RuntimeException {
+        MyException(String msg) {
+            super(msg);
+        }
     }
 
     @Override

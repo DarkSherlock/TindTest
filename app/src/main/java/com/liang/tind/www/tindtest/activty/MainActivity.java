@@ -1,5 +1,6 @@
 package com.liang.tind.www.tindtest.activty;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
 import com.liang.tind.www.tindtest.R;
 import com.liang.tind.www.tindtest.activty.dump.DumpActivity;
 import com.liang.tind.www.tindtest.activty.kotlin.CoroutineActivity;
@@ -27,14 +27,11 @@ import com.liang.tind.www.tindtest.battery.BatteryChangedReceiver;
 import com.liang.tind.www.tindtest.receiver.NetworkBroadcastReceiver;
 import com.liang.tind.www.tindtest.util.NetworkUtils;
 import com.liang.tind.www.tindtest.util.SocketClient;
-
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class MainActivity extends ListActivity implements NetworkBroadcastReceiver.NetEvent {
     public static transient final String KEY_CLASS = "class";
